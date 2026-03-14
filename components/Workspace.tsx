@@ -15,7 +15,7 @@ export function Workspace() {
     tabInfos, 
     activeTabId, 
     activeSubTabIds,
-    tenants,
+    tenantStubs,
     openTab, 
     closeTab, 
     setActiveTab,
@@ -47,7 +47,7 @@ export function Workspace() {
     <div className="flex h-screen bg-white text-gray-900 overflow-hidden">
       <Sidebar 
         sidebarOpen={sidebarOpen} 
-        tenants={tenants} 
+        tenantStubs={tenantStubs} 
         openTab={openTab} 
         logout={logout} 
       />

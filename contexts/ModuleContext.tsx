@@ -1,10 +1,9 @@
 'use client';
 
-import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { TabInfo } from './WorkspaceContext';
 import { Module } from '@/client-metadata/Module';
 import { useTenant } from './TenantContext';
-import { ConfigService } from '@/services/ConfigService';
 
 import { Tenant } from '@/client-metadata/Tenant';
 
@@ -18,26 +17,10 @@ const ModuleContext = createContext<ModuleContextType | undefined>(undefined);
 
 export function ModuleProvider({ tabInfo, children }: { tabInfo: TabInfo, children: React.ReactNode }) {
   const { tenant } = useTenant();
-  const [moduleConfig, setModuleConfig] = useState<Module | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchModule = async () => {
-      if (!tenant || !tabInfo.moduleName) return;
-      try {
-        const m = await ConfigService.getModule(tenant.id, tabInfo.moduleName);
-        if (isMounted) {
-          setModuleConfig(m);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Failed to fetch module:', error);
-        if (isMounted) setLoading(false);
-      }
-    };
-    fetchModule();
-    return () => { isMounted = false; };
+  const moduleConfig = useMemo(() => {
+    if (!tenant || !tabInfo.moduleName) return undefined;
+    return tenant.modules.find(m => m.name === tabInfo.moduleName);
   }, [tenant, tabInfo.moduleName]);
 
   const value = useMemo(() => ({
@@ -46,7 +29,7 @@ export function ModuleProvider({ tabInfo, children }: { tabInfo: TabInfo, childr
     tabInfo
   }), [tenant, tabInfo, moduleConfig]);
 
-  if (loading || !moduleConfig) {
+  if (!moduleConfig) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-gray-500">Loading Module...</div>

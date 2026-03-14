@@ -1,6 +1,5 @@
 import { Module, ModuleConfig } from '@/client-metadata/Module';
-import { Tenant } from '@/client-metadata/Tenant';
-import { TenantStub } from '@/metadata/Tenant';
+import { Tenant, TenantConfig } from '@/client-metadata/Tenant';
 
 export class ConfigService {
   /**
@@ -18,8 +17,8 @@ export class ConfigService {
       }
       throw new Error(errorMessage);
     }
-    const stub: TenantStub = await response.json();
-    return new Tenant(stub);
+    const config: TenantConfig = await response.json();
+    return new Tenant(config);
   }
 
   /**

@@ -1,4 +1,5 @@
 import { Module, ModuleConfig, ModuleStub } from './Module';
+import { TenantConfig as ClientTenantConfig } from '../client-metadata/Tenant';
 
 export interface TenantConfig {
   id: string;
@@ -27,12 +28,12 @@ export class Tenant {
     return this.modules.find(m => m.name === name);
   }
 
-  toClientConfig(): TenantConfig {
+  toClientConfig(): ClientTenantConfig {
     return {
       id: this.id,
       name: this.name,
       modules: this.modules.map(m => m.toClientConfig()),
-    }
+    };
   }
 
   toStub(): TenantStub {

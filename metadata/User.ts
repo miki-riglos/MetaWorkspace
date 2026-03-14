@@ -1,4 +1,4 @@
-import { Tenant, TenantStub } from './Tenant';
+import { Tenant, TenantConfig, TenantStub } from './Tenant';
 
 export type UserRecord = {
   id: string;
@@ -27,15 +27,16 @@ export class User {
     this.tenantIds = record.tenantIds;
   }
 
-  toStub(tenantStubs: TenantStub[]): UserStub {
-    const filteredStubs = tenantStubs
-      .filter(stub => this.tenantIds.includes(stub.id));
+  toStub(tenantConfigs: TenantConfig[]): UserStub {
+    const tenantStubs = tenantConfigs
+      .filter(config => this.tenantIds.includes(config.id))
+      .map(config => new Tenant(config).toStub());
 
     return {
       id: this.id,
       email: this.email,
       name: this.name,
-      tenantStubs: filteredStubs,
+      tenantStubs,
     };
   }
 }

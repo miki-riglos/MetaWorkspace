@@ -12,12 +12,12 @@ function cn(...inputs: ClassValue[]) {
 
 interface SidebarProps {
   sidebarOpen: boolean;
-  tenants: any[];
+  tenantStubs: any[];
   openTab: (tabInfo: Omit<TabInfo, 'id'>) => void;
   logout: () => void;
 }
 
-export function Sidebar({ sidebarOpen, tenants, openTab, logout }: SidebarProps) {
+export function Sidebar({ sidebarOpen, tenantStubs, openTab, logout }: SidebarProps) {
   return (
     <aside className={cn(
       "bg-gray-900 text-white transition-all duration-300 flex flex-col",
@@ -31,7 +31,7 @@ export function Sidebar({ sidebarOpen, tenants, openTab, logout }: SidebarProps)
       </div>
 
       <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-8">
-        {tenants.map((tenant) => (
+        {tenantStubs.map((tenant) => (
           <div key={tenant.id} className="space-y-2">
             {sidebarOpen && (
               <button

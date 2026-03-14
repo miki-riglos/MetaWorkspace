@@ -1,23 +1,22 @@
-import { TenantStub } from '@/metadata/Tenant';
-import { Module } from '@/metadata/Module';
+import { TenantConfig } from '@/metadata/Tenant';
 import { salesModule } from './sales';
 import { inventoryModule } from './inventory';
 import { metaManagerModule } from './meta-manager';
 
-export const MOCK_TENANTS: TenantStub[] = [
+export const MOCK_TENANTS: TenantConfig[] = [
   {
     id: 'tenant-1',
     name: 'Acme Corp',
-    moduleStubs: [new Module(salesModule).toStub()],
+    modules: [salesModule],
   },
   {
     id: 'tenant-2',
     name: 'Globex',
-    moduleStubs: [new Module(inventoryModule).toStub()],
+    modules: [inventoryModule],
   },
   {
     id: 'tenant-admin',
     name: 'Meta Administrator',
-    moduleStubs: [new Module(metaManagerModule).toStub()],
+    modules: [metaManagerModule],
   },
 ];

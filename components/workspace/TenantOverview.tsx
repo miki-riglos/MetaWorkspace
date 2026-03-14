@@ -21,7 +21,7 @@ export function TenantOverview({ tabInfo, openTab }: TenantOverviewProps) {
       <h2 className="text-2xl font-bold tracking-tight">{tabInfo.title}</h2>
       <p className="text-gray-500 mt-2">Tenant Overview</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 max-w-2xl w-full">
-        {tenant?.moduleStubs.map((m: any) => (
+        {tenant?.modules.map((m: any) => (
           <button
             key={m.name}
             onMouseDown={() => openTab({

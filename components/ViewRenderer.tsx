@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { ViewInit } from '@/metadata/View';
+import { ViewConfig } from '@/metadata/View';
 import { viewRegistry } from '@/registries/viewRegistry';
 
 interface ViewRendererProps {
-  viewConfig: ViewInit;
+  viewConfig: ViewConfig;
   tenantId: string;
   moduleName: string;
   $module?: any;

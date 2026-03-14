@@ -1,8 +1,9 @@
 'use client';
 
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
 import { TabInfo } from './WorkspaceContext';
 import { Tenant } from '@/client-metadata/Tenant';
+import { ConfigService } from '@/services/ConfigService';
 import { useAuth } from './AuthContext';
 
 import { User } from '@/client-metadata/User';
@@ -17,16 +18,26 @@ const TenantContext = createContext<TenantContextType | undefined>(undefined);
 
 export function TenantProvider({ tabInfo, children }: { tabInfo: TabInfo, children: React.ReactNode }) {
   const { user } = useAuth();
+  const [tenant, setTenant] = useState<Tenant | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
 
-  const tenant = useMemo(() => {
-    if (!user) return undefined;
-    const stub = user.tenantStubs.find(s => s.id === tabInfo.tenantId);
-    if (!stub) {
-      console.error(`Tenant stub not found for ID: ${tabInfo.tenantId}`);
-      return undefined;
-    }
-    return new Tenant(stub);
-  }, [user, tabInfo.tenantId]);
+  useEffect(() => {
+    let isMounted = true;
+    const fetchTenant = async () => {
+      try {
+        const t = await ConfigService.getTenant(tabInfo.tenantId);
+        if (isMounted) {
+          setTenant(t);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Failed to fetch tenant:', error);
+        if (isMounted) setLoading(false);
+      }
+    };
+    fetchTenant();
+    return () => { isMounted = false; };
+  }, [tabInfo.tenantId]);
 
   const value = useMemo(() => ({
     user,
@@ -34,7 +45,7 @@ export function TenantProvider({ tabInfo, children }: { tabInfo: TabInfo, childr
     tabInfo
   }), [user, tabInfo, tenant]);
 
-  if (!user || !tenant) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>

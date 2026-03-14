@@ -19,7 +19,7 @@ export function AddMenu({
   tabInfos,
   openTab
 }: AddMenuProps) {
-  const { tenants } = useWorkspace();
+  const { tenantStubs } = useWorkspace();
   const addMenuRef = useRef<HTMLDivElement>(null);
   const [$module, set$module] = useState<Module | null>(null);
 
@@ -57,7 +57,7 @@ export function AddMenu({
   const tabInfo = tabInfos.find(t => t.id === addMenu.id);
   if (!tabInfo) return null;
 
-  const tenant = tenants.find(s => s.id === tabInfo.tenantId);
+  const tenantStub = tenantStubs.find(s => s.id === tabInfo.tenantId);
 
   return (
     <div
@@ -70,7 +70,7 @@ export function AddMenu({
       </div>
       {addMenu.type === 'tenant' ? (
         <>
-          {tenant?.moduleStubs.map((m: any) => (
+          {tenantStub?.moduleStubs.map((m: any) => (
             <button
               key={m.name}
               onClick={() => {

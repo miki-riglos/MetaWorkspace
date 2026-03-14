@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
 import { TenantStub } from '@/metadata/Tenant';
-import { Tenant } from '@/client-metadata/Tenant';
 import { useAuth } from '@/contexts/AuthContext';
 
 export type TabType = 'tenant' | 'module' | 'view';
@@ -24,7 +23,7 @@ export interface WorkspaceState {
 }
 
 export interface WorkspaceContextType extends WorkspaceState {
-  tenants: Tenant[];
+  tenantStubs: TenantStub[];
   openTab: (tabInfo: Omit<TabInfo, 'id'>) => void;
   closeTab: (id: string) => void;
   setActiveTab: (id: string) => void;
@@ -116,7 +115,7 @@ function ensureTab(
 
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  const tenants = useMemo(() => user?.tenants || [], [user]);
+  const tenantStubs = useMemo(() => user?.tenantStubs || [], [user]);
   const [state, setState] = useState<WorkspaceState>({
     tabInfos: [],
     activeTabId: null,
@@ -132,8 +131,8 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       const { tabInfos, activeSubTabIds, activeTabId } = prev;
       let currentTabInfos = [...tabInfos];
 
-      const tenant = tenants.find(t => t.id === tenantId);
-      const moduleStub = tenant?.moduleStubs.find((m: any) => m.name === moduleName);
+      const tenantStub = tenantStubs.find(t => t.id === tenantId);
+      const moduleStub = tenantStub?.moduleStubs.find(m => m.name === moduleName);
 
       const tenantTabId = ensureTab(
         currentTabInfos,
@@ -141,7 +140,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
         activeTabId,
         tabData.tabType,
         'tenant', 
-        tenant?.name || `Tenant ${tenantId}`, 
+        tenantStub?.name || `Tenant ${tenantId}`, 
         tenantId
       );
 
@@ -198,7 +197,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
         activeSubTabIds: nextSubTabIds
       };
     });
-  }, [tenants]);
+  }, [tenantStubs]);
 
   const closeTab = useCallback((id: string) => {
     setState((prev) => {
@@ -362,7 +361,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   return (
     <WorkspaceContext.Provider value={{ 
       ...state,
-      tenants,
+      tenantStubs,
       openTab, 
       closeTab, 
       setActiveTab,
