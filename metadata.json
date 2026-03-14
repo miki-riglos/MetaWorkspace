@@ -1,0 +1,5 @@
+{
+  "name": "MetaWorkspace",
+  "description": "A multi-tenant metadata-driven workspace application.",
+  "requestFramePermissions": []
+}
