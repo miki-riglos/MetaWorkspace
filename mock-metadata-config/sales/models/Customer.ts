@@ -1,6 +1,6 @@
-import { ModelConfig } from '@/metadata/Model';
+import { ModelRecord } from '@/metadata/Model';
 
-export const Customer: ModelConfig = {
+export const Customer: ModelRecord = {
   name: 'Customer',
   label: 'Customer',
   properties: [
@@ -8,11 +8,11 @@ export const Customer: ModelConfig = {
     { name: 'name', label: 'Name', dataType: 'string', required: true },
     { name: 'email', label: 'Email', dataType: 'string' },
     { name: 'status', label: 'Status', dataType: 'string' },
-    { 
-      name: 'addresses', 
-      label: 'Addresses', 
-      dataType: 'relation', 
-      relation: { targetModel: 'Address', cardinality: 'ONE_TO_MANY' } 
+    {
+      name: 'addresses',
+      label: 'Addresses',
+      dataType: 'relation',
+      relation: { targetModel: 'Address', cardinality: 'ONE_TO_MANY' }
     },
   ],
 };

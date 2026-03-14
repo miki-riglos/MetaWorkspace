@@ -1,16 +1,8 @@
-import { ViewInit as ClientViewInit } from '../client-metadata/View';
+import { ViewConfig, ViewPartConfig, } from '../client-metadata/View';
 
 export type ViewType = 'LIST' | 'DETAIL';
 
-export interface ViewPartConfig {
-  id: string;
-  component: string;
-  props?: Record<string, any>;
-  children?: ViewPartConfig[];
-  propertyName?: string; // For detail views, which property this part binds to
-}
-
-export interface ViewInit {
+export interface ViewRecord {
   name: string;
   label: string;
   viewType: ViewType;
@@ -23,6 +15,7 @@ export interface ViewStub {
   name: string;
   label: string;
   viewType: ViewType;
+  isMenuOption: boolean;
 }
 
 export class View {
@@ -33,13 +26,13 @@ export class View {
   public readonly parts: ViewPartConfig[];
   public readonly isMenuOption: boolean;
 
-  constructor(config: ViewInit) {
-    this.name = config.name;
-    this.label = config.label;
-    this.viewType = config.viewType;
-    this.modelName = config.modelName;
-    this.parts = config.parts;
-    this.isMenuOption = config.isMenuOption;
+  constructor(record: ViewRecord) {
+    this.name = record.name;
+    this.label = record.label;
+    this.viewType = record.viewType;
+    this.modelName = record.modelName;
+    this.parts = record.parts;
+    this.isMenuOption = record.isMenuOption;
   }
 
   toStub(): ViewStub {
@@ -47,10 +40,11 @@ export class View {
       name: this.name,
       label: this.label,
       viewType: this.viewType,
+      isMenuOption: this.isMenuOption,
     };
   }
 
-  toClientConfig(): ClientViewInit {
+  toClientConfig(): ViewConfig {
     return {
       name: this.name,
       label: this.label,

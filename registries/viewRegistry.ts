@@ -2,14 +2,12 @@
 
 import React from 'react';
 import { Registry } from '@/lib/Registry';
+import { View } from '@/client-metadata/View';
 import { ListView } from '@/components/ListView';
 import { DetailView } from '@/components/DetailView';
 
 export interface ViewComponentProps {
-  viewConfig: any;
-  tenantId: string;
-  moduleName: string;
-  modelDef?: any;
+  view: View;
   idValues?: Record<string, any>;
 }
 

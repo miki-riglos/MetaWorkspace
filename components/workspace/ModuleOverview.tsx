@@ -11,7 +11,7 @@ interface ModuleOverviewProps {
 }
 
 export function ModuleOverview({ tabInfo, openTab }: ModuleOverviewProps) {
-  const { $module } = useModule();
+  const { module: $module } = useModule();
 
   return (
     <div className="p-12 flex flex-col items-center justify-center h-full text-center">

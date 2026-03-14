@@ -1,15 +1,11 @@
 'use client';
 
-import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { TabInfo } from './WorkspaceContext';
 import { Tenant } from '@/client-metadata/Tenant';
-import { ConfigService } from '@/services/ConfigService';
 import { useAuth } from './AuthContext';
 
-import { User } from '@/client-metadata/User';
-
 interface TenantContextType {
-  user: User | null;
   tenant: Tenant;
   tabInfo: TabInfo;
 }
@@ -18,43 +14,18 @@ const TenantContext = createContext<TenantContextType | undefined>(undefined);
 
 export function TenantProvider({ tabInfo, children }: { tabInfo: TabInfo, children: React.ReactNode }) {
   const { user } = useAuth();
-  const [tenant, setTenant] = useState<Tenant | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchTenant = async () => {
-      try {
-        const t = await ConfigService.getTenant(tabInfo.tenantId);
-        if (isMounted) {
-          setTenant(t);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Failed to fetch tenant:', error);
-        if (isMounted) setLoading(false);
-      }
-    };
-    fetchTenant();
-    return () => { isMounted = false; };
-  }, [tabInfo.tenantId]);
+  const tenant = useMemo(() => {
+    return user?.tenants.find(t => t.id === tabInfo.tenantId);
+  }, [user, tabInfo.tenantId]);
 
-  const value = useMemo(() => ({
-    user,
-    tenant,
+  const context = useMemo<TenantContextType>(() => ({
+    tenant: tenant!,
     tabInfo
-  }), [user, tabInfo, tenant]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      </div>
-    );
-  }
+  }), [tabInfo, tenant]);
 
   return (
-    <TenantContext.Provider value={value as TenantContextType}>
+    <TenantContext.Provider value={context}>
       {children}
     </TenantContext.Provider>
   );

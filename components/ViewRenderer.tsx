@@ -1,30 +1,25 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { ViewConfig } from '@/metadata/View';
+import { View } from '@/client-metadata/View';
 import { viewRegistry } from '@/registries/viewRegistry';
+import { TabInfo } from '@/contexts/WorkspaceContext';
 
 interface ViewRendererProps {
-  viewConfig: ViewConfig;
-  tenantId: string;
-  moduleName: string;
-  $module?: any;
+  tabInfo: TabInfo;
+  view: View;
   idValues?: Record<string, any>;
 }
 
-export function ViewRenderer({ viewConfig, tenantId, moduleName, $module, idValues }: ViewRendererProps) {
-  const modelDef = $module?.models?.find((m: any) => m.name === viewConfig.modelName);
-  const ViewComponent = useMemo(() => viewRegistry.get(viewConfig.viewType), [viewConfig.viewType]);
+export function ViewRenderer({ tabInfo, view, idValues }: ViewRendererProps) {
+  const ViewComponent = useMemo(() => viewRegistry.get(view.viewType), [view.viewType]);
 
   if (!ViewComponent) {
-    return <div className="p-4 text-red-500">View type {viewConfig.viewType} not found in registry.</div>;
+    return <div className="p-4 text-red-500">View type {view.viewType} not found in registry.</div>;
   }
 
   return React.createElement(ViewComponent, {
-    viewConfig,
-    tenantId,
-    moduleName,
-    modelDef,
-    idValues: idValues || {}
+    view,
+    idValues: idValues ?? {}
   });
 }

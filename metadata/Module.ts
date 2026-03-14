@@ -1,12 +1,12 @@
-import { Model, ModelConfig } from './Model';
-import { View, ViewInit, ViewStub } from './View';
-import { ModuleConfig as ClientModuleConfig } from '../client-metadata/Module';
+import { Model, ModelRecord } from './Model';
+import { View, ViewRecord, ViewStub } from './View';
+import { ModuleConfig } from '../client-metadata/Module';
 
-export interface ModuleConfig {
+export interface ModuleRecord {
   name: string;
   label: string;
-  models: ModelConfig[];
-  views: ViewInit[];
+  models: ModelRecord[];
+  views: ViewRecord[];
 }
 
 export interface ModuleStub {
@@ -21,11 +21,11 @@ export class Module {
   public readonly models: Model[];
   public readonly views: View[];
 
-  constructor(config: ModuleConfig) {
-    this.name = config.name;
-    this.label = config.label;
-    this.models = config.models.map(m => new Model(m));
-    this.views = config.views.map(v => new View(v));
+  constructor(record: ModuleRecord) {
+    this.name = record.name;
+    this.label = record.label;
+    this.models = record.models.map(m => new Model(m));
+    this.views = record.views.map(v => new View(v));
   }
 
   getModel(name: string): Model | undefined {
@@ -46,7 +46,7 @@ export class Module {
     };
   }
 
-  toClientConfig(): ClientModuleConfig {
+  toClientConfig(): ModuleConfig {
     return {
       name: this.name,
       label: this.label,

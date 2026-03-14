@@ -1,6 +1,6 @@
-import { ModelConfig } from '@/metadata/Model';
+import { ModelRecord } from '@/metadata/Model';
 
-export const ViewModel: ModelConfig = {
+export const ViewModel: ModelRecord = {
   name: 'View',
   label: 'View',
   properties: [

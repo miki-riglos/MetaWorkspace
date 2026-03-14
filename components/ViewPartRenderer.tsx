@@ -1,61 +1,52 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { ViewPartConfig } from '@/metadata/View';
-import { ModelConfig } from '@/metadata/Model';
+import { View, ViewPartConfig } from '@/client-metadata/View';
 import { viewPartRegistry } from '@/registries/viewPartRegistry';
 
 interface ViewPartRendererProps {
+  view: View;
   part: ViewPartConfig;
-  tenantId: string;
-  moduleName: string;
-  modelDef?: ModelConfig;
   data?: any[];
   record?: any;
   onRecordChange?: (propertyName: string, value: any) => void;
 }
 
 export function ViewPartRenderer({
-  part,
-  tenantId,
-  moduleName,
-  modelDef,
+  view,
+  part: partConfig,
   data,
   record,
   onRecordChange
 }: ViewPartRendererProps) {
-  const Component = useMemo(() => viewPartRegistry.get(part.component), [part.component]);
-  
+  const Component = useMemo(() => viewPartRegistry.get(partConfig.componentName), [partConfig.componentName]);
+
   // Find property definition if propertyName is specified
-  const propertyDef = modelDef?.properties?.find((p: any) => p.name === part.propertyName);
-  
+  const property = view.model.properties.find((p: any) => p.name === partConfig.propertyName);
+
   // Enriched props for the component
   const enrichedProps = {
-    ...part.props,
-    tenantId,
-    moduleName,
-    targetModel: propertyDef?.relation?.targetModel,
-    cardinality: propertyDef?.relation?.cardinality,
+    ...partConfig.props,
+    targetModel: property?.relation?.targetModel,
+    cardinality: property?.relation?.cardinality,
   };
 
   // Final props passed to the component
   const componentProps = {
     props: enrichedProps,
     data,
-    value: part.propertyName && record ? record[part.propertyName] : undefined,
-    onChange: part.propertyName && onRecordChange 
-      ? (val: any) => onRecordChange(part.propertyName!, val) 
+    value: partConfig.propertyName && record ? record[partConfig.propertyName] : undefined,
+    onChange: partConfig.propertyName && onRecordChange
+      ? (val: any) => onRecordChange(partConfig.propertyName!, val)
       : undefined,
   };
 
   // Render children recursively
-  const children = part.children?.map(child => (
+  const children = partConfig.children?.map(child => (
     <ViewPartRenderer
       key={child.id}
+      view={view}
       part={child}
-      tenantId={tenantId}
-      moduleName={moduleName}
-      modelDef={modelDef}
       data={data}
       record={record}
       onRecordChange={onRecordChange}
@@ -64,7 +55,7 @@ export function ViewPartRenderer({
 
   return React.createElement(
     Component,
-    { ...componentProps, key: part.id },
+    { ...componentProps, key: partConfig.id },
     children
   );
 }

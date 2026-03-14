@@ -1,31 +1,43 @@
+import { DataService } from '@/services/DataService';
 import { Model, ModelConfig } from './Model';
-import { View, ViewInit } from './View';
+import { Tenant } from './Tenant';
+import { View, ViewConfig } from './View';
 
 export interface ModuleConfig {
   name: string;
   label: string;
   models: ModelConfig[];
-  views: ViewInit[];
+  views: ViewConfig[];
 }
 
 export class Module {
+  public readonly tenant: Tenant;
   public readonly name: string;
   public readonly label: string;
   public readonly models: Model[];
   public readonly views: View[];
 
-  constructor(config: ModuleConfig) {
+  public readonly dataService: DataService;
+
+  constructor(config: ModuleConfig, tenant: Tenant) {
+    this.tenant = tenant;
     this.name = config.name;
     this.label = config.label;
-    this.models = config.models.map(m => new Model(m));
-    this.views = config.views.map(v => new View(v));
+    this.models = config.models.map(m => new Model(m, this));
+    this.views = config.views.map(v => new View(v, this));
+
+    this.dataService = new DataService(this.tenant.id);
   }
 
-  getModel(name: string): Model | undefined {
-    return this.models.find(m => m.name === name);
+  getModel(modelName: string): Model {
+    const model = this.models.find(m => m.name === modelName);
+    if (!model) throw new Error(`Model ${modelName} not found in Module ${this.name}`);
+    return model;
   }
 
-  getView(name: string): View | undefined {
-    return this.views.find(v => v.name === name);
+  getView(viewName: string): View {
+    const view = this.views.find(v => v.name === viewName);
+    if (!view) throw new Error(`View ${viewName} not found in Module ${this.name}`);
+    return view;
   }
 }

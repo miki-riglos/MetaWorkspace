@@ -1,9 +1,9 @@
-import { TenantConfig } from '@/metadata/Tenant';
+import { TenantRecord } from '@/metadata/Tenant';
 import { salesModule } from './sales';
 import { inventoryModule } from './inventory';
 import { metaManagerModule } from './meta-manager';
 
-export const MOCK_TENANTS: TenantConfig[] = [
+export const MOCK_TENANTS: TenantRecord[] = [
   {
     id: 'tenant-1',
     name: 'Acme Corp',

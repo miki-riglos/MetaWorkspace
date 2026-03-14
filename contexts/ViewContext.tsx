@@ -5,10 +5,7 @@ import { TabInfo } from './WorkspaceContext';
 import { View } from '@/client-metadata/View';
 import { useModule } from './ModuleContext';
 
-import { Module } from '@/client-metadata/Module';
-
 interface ViewContextType {
-  $module: Module;
   view: View;
   tabInfo: TabInfo;
 }
@@ -16,18 +13,16 @@ interface ViewContextType {
 const ViewContext = createContext<ViewContextType | undefined>(undefined);
 
 export function ViewProvider({ tabInfo, children }: { tabInfo: TabInfo, children: React.ReactNode }) {
-  const { $module } = useModule();
+  const { module } = useModule();
 
   const view = useMemo(() => {
-    if (!$module || !tabInfo.viewName) return undefined;
-    return $module.views.find(v => v.name === tabInfo.viewName);
-  }, [$module, tabInfo.viewName]);
+    return module.getView(tabInfo.viewName!);
+  }, [module, tabInfo.viewName]);
 
-  const value = useMemo(() => ({
-    $module,
-    view,
+  const context = useMemo<ViewContextType>(() => ({
+    view: view!,
     tabInfo
-  }), [$module, tabInfo, view]);
+  }), [tabInfo, view]);
 
   if (!view) {
     return (
@@ -38,7 +33,7 @@ export function ViewProvider({ tabInfo, children }: { tabInfo: TabInfo, children
   }
 
   return (
-    <ViewContext.Provider value={value as ViewContextType}>
+    <ViewContext.Provider value={context}>
       {children}
     </ViewContext.Provider>
   );

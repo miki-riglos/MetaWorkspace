@@ -1,6 +1,8 @@
-import { ViewType, ViewPartConfig } from '@/metadata/View';
+import { ViewType } from '@/metadata/View';
+import { Module } from './Module';
+import { Model } from './Model';
 
-export interface ViewInit {
+export interface ViewConfig {
   name: string;
   label: string;
   viewType: ViewType;
@@ -9,19 +11,29 @@ export interface ViewInit {
   isMenuOption: boolean;
 }
 
+export interface ViewPartConfig {
+  id: string;
+  componentName: string;
+  props?: Record<string, any>;
+  children?: ViewPartConfig[];
+  propertyName?: string; // For detail views, which property this part binds to
+}
+
 export class View {
+  public readonly module: Module;
   public readonly name: string;
   public readonly label: string;
   public readonly viewType: ViewType;
-  public readonly modelName: string;
+  public readonly model: Model;
   public readonly parts: ViewPartConfig[];
   public readonly isMenuOption: boolean;
 
-  constructor(config: ViewInit) {
+  constructor(config: ViewConfig, module: Module) {
+    this.module = module;
     this.name = config.name;
     this.label = config.label;
     this.viewType = config.viewType;
-    this.modelName = config.modelName;
+    this.model = module.getModel(config.modelName)!;
     this.parts = config.parts;
     this.isMenuOption = config.isMenuOption;
   }

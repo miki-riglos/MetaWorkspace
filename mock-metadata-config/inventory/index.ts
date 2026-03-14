@@ -1,8 +1,8 @@
-import { ModuleConfig } from '@/metadata/Module';
+import { ModuleRecord } from '@/metadata/Module';
 import { Product } from './models/Product';
 import { ProductList } from './views/ProductList';
 
-export const inventoryModule: ModuleConfig = {
+export const inventoryModule: ModuleRecord = {
   name: 'inventory',
   label: 'Inventory Control',
   models: [Product],

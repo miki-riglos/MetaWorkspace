@@ -1,6 +1,6 @@
-import { ViewInit } from '@/metadata/View';
+import { ViewRecord } from '@/metadata/View';
 
-export const ViewDetail: ViewInit = {
+export const ViewDetail: ViewRecord = {
   name: 'ViewDetail',
   label: 'View Detail',
   viewType: 'DETAIL',
@@ -9,11 +9,11 @@ export const ViewDetail: ViewInit = {
   parts: [
     {
       id: 'v-d1',
-      component: 'FormLayout',
+      componentName: 'FormLayout',
       children: [
-        { id: 'v-d1-1', component: 'TextField', propertyName: 'label', props: { label: 'View Label' } },
-        { id: 'v-d1-2', component: 'TextField', propertyName: 'name', props: { label: 'System Name' } },
-        { id: 'v-d1-3', component: 'SelectField', propertyName: 'type', props: { label: 'View Type', options: ['LIST', 'DETAIL'] } },
+        { id: 'v-d1-1', componentName: 'TextField', propertyName: 'label', props: { label: 'View Label' } },
+        { id: 'v-d1-2', componentName: 'TextField', propertyName: 'name', props: { label: 'System Name' } },
+        { id: 'v-d1-3', componentName: 'SelectField', propertyName: 'type', props: { label: 'View Type', options: ['LIST', 'DETAIL'] } },
       ],
     },
   ],

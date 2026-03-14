@@ -1,6 +1,6 @@
-import { ViewInit } from '@/metadata/View';
+import { ViewRecord } from '@/metadata/View';
 
-export const ProductList: ViewInit = {
+export const ProductList: ViewRecord = {
   name: 'ProductList',
   label: 'Product List',
   viewType: 'LIST',
@@ -9,7 +9,7 @@ export const ProductList: ViewInit = {
   parts: [
     {
       id: 'p3',
-      component: 'DataGrid',
+      componentName: 'DataGrid',
       props: {
         columns: [
           { field: 'sku', header: 'SKU' },

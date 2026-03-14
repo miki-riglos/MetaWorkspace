@@ -1,6 +1,6 @@
-import { ViewInit } from '@/metadata/View';
+import { ViewRecord } from '@/metadata/View';
 
-export const CustomerDetail: ViewInit = {
+export const CustomerDetail: ViewRecord = {
   name: 'CustomerDetail',
   label: 'Customer Detail',
   viewType: 'DETAIL',
@@ -9,16 +9,16 @@ export const CustomerDetail: ViewInit = {
   parts: [
     {
       id: 'p2',
-      component: 'FormLayout',
+      componentName: 'FormLayout',
       children: [
-        { id: 'p2-1', component: 'TextField', propertyName: 'name', props: { label: 'Full Name' } },
-        { id: 'p2-2', component: 'TextField', propertyName: 'email', props: { label: 'Email Address' } },
-        { id: 'p2-3', component: 'SelectField', propertyName: 'status', props: { label: 'Status', options: ['Active', 'Inactive'] } },
+        { id: 'p2-1', componentName: 'TextField', propertyName: 'name', props: { label: 'Full Name' } },
+        { id: 'p2-2', componentName: 'TextField', propertyName: 'email', props: { label: 'Email Address' } },
+        { id: 'p2-3', componentName: 'SelectField', propertyName: 'status', props: { label: 'Status', options: ['Active', 'Inactive'] } },
       ],
     },
     {
       id: 'p2-4',
-      component: 'RelationGrid',
+      componentName: 'RelationGrid',
       propertyName: 'addresses',
       props: {
         label: 'Customer Addresses',

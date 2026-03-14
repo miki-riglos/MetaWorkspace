@@ -1,4 +1,4 @@
-import { ModuleConfig } from '@/metadata/Module';
+import { ModuleRecord } from '@/metadata/Module';
 import { ModuleModel } from './models/Module';
 import { ModelModel } from './models/Model';
 import { ViewModel } from './models/View';
@@ -9,7 +9,7 @@ import { ModelDetail } from './views/ModelDetail';
 import { ViewDetail } from './views/ViewDetail';
 import { ModuleDetail } from './views/ModuleDetail';
 
-export const metaManagerModule: ModuleConfig = {
+export const metaManagerModule: ModuleRecord = {
   name: 'meta-manager',
   label: 'Metadata Manager',
   models: [ModuleModel, ModelModel, ViewModel],

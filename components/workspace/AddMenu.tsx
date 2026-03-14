@@ -3,8 +3,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Box, Layout } from 'lucide-react';
 import { TabInfo, useWorkspace } from '@/contexts/WorkspaceContext';
-import { ConfigService } from '@/services/ConfigService';
-import { Module } from '@/client-metadata/Module';
 
 interface AddMenuProps {
   addMenu: { id: string, x: number, y: number, type: 'tenant' | 'module' } | null;
@@ -21,7 +19,6 @@ export function AddMenu({
 }: AddMenuProps) {
   const { tenantStubs } = useWorkspace();
   const addMenuRef = useRef<HTMLDivElement>(null);
-  const [$module, set$module] = useState<Module | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,31 +30,13 @@ export function AddMenu({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [setAddMenu]);
 
-  useEffect(() => {
-    let isMounted = true;
-    if (addMenu?.type === 'module') {
-      const tabInfo = tabInfos.find(t => t.id === addMenu.id);
-      if (tabInfo?.moduleName) {
-        ConfigService.getModule(tabInfo.tenantId, tabInfo.moduleName)
-          .then(m => {
-            if (isMounted) set$module(m);
-          })
-          .catch(err => console.error('Failed to fetch module for AddMenu:', err));
-      }
-    }
-
-    return () => {
-      isMounted = false;
-      set$module(null);
-    };
-  }, [addMenu, tabInfos]);
-
   if (!addMenu) return null;
 
   const tabInfo = tabInfos.find(t => t.id === addMenu.id);
   if (!tabInfo) return null;
 
   const tenantStub = tenantStubs.find(s => s.id === tabInfo.tenantId);
+  const moduleStub = tenantStub?.moduleStubs[0];
 
   return (
     <div
@@ -92,10 +71,10 @@ export function AddMenu({
         </>
       ) : (
         <>
-          {!$module ? (
+          {!moduleStub ? (
             <div className="px-4 py-2 text-xs text-gray-400 italic">Loading views...</div>
           ) : (
-            $module.views.map((v: any) => (
+            moduleStub.views.map((v: any) => (
               <button
                 key={v.name}
                 onClick={() => {

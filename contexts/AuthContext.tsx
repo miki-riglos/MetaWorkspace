@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { AuthService } from '@/services/AuthService';
 import { User } from '@/client-metadata/User';
-import { TenantStub } from '@/metadata/Tenant';
 
 interface AuthContextType {
   user: User | null;
@@ -22,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const loggedInUser = await AuthService.login(email);
-      
+
       setUser(loggedInUser);
     } catch (err: any) {
       throw err;

@@ -1,10 +1,10 @@
-import { Module, ModuleConfig, ModuleStub } from './Module';
-import { TenantConfig as ClientTenantConfig } from '../client-metadata/Tenant';
+import { Module, ModuleRecord, ModuleStub } from './Module';
+import { TenantConfig } from '../client-metadata/Tenant';
 
-export interface TenantConfig {
+export interface TenantRecord {
   id: string;
   name: string;
-  modules: ModuleConfig[];
+  modules: ModuleRecord[];
 }
 
 export interface TenantStub {
@@ -18,22 +18,14 @@ export class Tenant {
   public readonly name: string;
   public readonly modules: Module[];
 
-  constructor(config: TenantConfig) {
-    this.id = config.id;
-    this.name = config.name;
-    this.modules = config.modules.map(m => new Module(m));
+  constructor(record: TenantRecord) {
+    this.id = record.id;
+    this.name = record.name;
+    this.modules = record.modules.map(m => new Module(m));
   }
 
   getModule(name: string): Module | undefined {
     return this.modules.find(m => m.name === name);
-  }
-
-  toClientConfig(): ClientTenantConfig {
-    return {
-      id: this.id,
-      name: this.name,
-      modules: this.modules.map(m => m.toClientConfig()),
-    };
   }
 
   toStub(): TenantStub {
@@ -41,6 +33,14 @@ export class Tenant {
       id: this.id,
       name: this.name,
       moduleStubs: this.modules.map(m => m.toStub()),
+    };
+  }
+
+  toClientConfig(): TenantConfig {
+    return {
+      id: this.id,
+      name: this.name,
+      modules: this.modules.map(m => m.toClientConfig()),
     };
   }
 }

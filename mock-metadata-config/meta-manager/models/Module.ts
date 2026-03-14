@@ -1,6 +1,6 @@
-import { ModelConfig } from '@/metadata/Model';
+import { ModelRecord } from '@/metadata/Model';
 
-export const ModuleModel: ModelConfig = {
+export const ModuleModel: ModelRecord = {
   name: 'Module',
   label: 'Module',
   properties: [

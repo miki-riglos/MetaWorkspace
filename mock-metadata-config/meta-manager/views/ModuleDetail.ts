@@ -1,6 +1,6 @@
-import { ViewInit } from '@/metadata/View';
+import { ViewRecord } from '@/metadata/View';
 
-export const ModuleDetail: ViewInit = {
+export const ModuleDetail: ViewRecord = {
   name: 'ModuleDetail',
   label: 'Module Detail',
   viewType: 'DETAIL',
@@ -9,10 +9,10 @@ export const ModuleDetail: ViewInit = {
   parts: [
     {
       id: 'md1',
-      component: 'FormLayout',
+      componentName: 'FormLayout',
       children: [
-        { id: 'md1-1', component: 'TextField', propertyName: 'label', props: { label: 'Module Label' } },
-        { id: 'md1-2', component: 'TextField', propertyName: 'name', props: { label: 'System Name' } },
+        { id: 'md1-1', componentName: 'TextField', propertyName: 'label', props: { label: 'Module Label' } },
+        { id: 'md1-2', componentName: 'TextField', propertyName: 'name', props: { label: 'System Name' } },
       ],
     },
   ],

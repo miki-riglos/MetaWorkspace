@@ -1,18 +1,21 @@
-import { PropertyConfig as ClientPropertyConfig } from '../client-metadata/Property';
+import { PropertyConfig } from '../client-metadata/Property';
 
 export type Cardinality = 'ONE_TO_ONE' | 'ONE_TO_MANY' | 'MANY_TO_ONE' | 'MANY_TO_MANY';
+
 export type DataType = 'string' | 'number' | 'boolean' | 'date' | 'relation';
 
-export interface PropertyConfig {
+export interface Relation {
+  targetModel: string;
+  cardinality: Cardinality;
+}
+
+export interface PropertyRecord {
   name: string;
   label: string;
   dataType: DataType;
   required?: boolean;
   isId?: boolean;
-  relation?: {
-    targetModel: string;
-    cardinality: Cardinality;
-  };
+  relation?: Relation;
 }
 
 export class Property {
@@ -26,16 +29,16 @@ export class Property {
     cardinality: Cardinality;
   };
 
-  constructor(config: PropertyConfig) {
-    this.name = config.name;
-    this.label = config.label;
-    this.dataType = config.dataType;
-    this.required = !!config.required;
-    this.isId = !!config.isId;
-    this.relation = config.relation;
+  constructor(record: PropertyRecord) {
+    this.name = record.name;
+    this.label = record.label;
+    this.dataType = record.dataType;
+    this.required = !!record.required;
+    this.isId = !!record.isId;
+    this.relation = record.relation;
   }
 
-  toClientConfig(): ClientPropertyConfig {
+  toClientConfig(): PropertyConfig {
     return {
       name: this.name,
       label: this.label,

@@ -1,4 +1,5 @@
 import { Property, PropertyConfig } from './Property';
+import { Module } from './Module';
 
 export interface ModelConfig {
   name: string;
@@ -7,18 +8,20 @@ export interface ModelConfig {
 }
 
 export class Model {
+  public readonly module: Module;
   public readonly name: string;
   public readonly label: string;
   public readonly properties: Property[];
 
-  constructor(config: ModelConfig) {
+  constructor(config: ModelConfig, module: Module) {
+    this.module = module;
     this.name = config.name;
     this.label = config.label;
-    this.properties = config.properties.map(p => new Property(p));
+    this.properties = config.properties.map(p => new Property(p, this));
   }
 
-  getProperty(name: string): Property | undefined {
-    return this.properties.find(p => p.name === name);
+  getProperty(propertyName: string): Property | undefined {
+    return this.properties.find(p => p.name === propertyName);
   }
 
   get idProperty(): Property | undefined {

@@ -1,6 +1,6 @@
-import { ViewInit } from '@/metadata/View';
+import { ViewRecord } from '@/metadata/View';
 
-export const AddressDetail: ViewInit = {
+export const AddressDetail: ViewRecord = {
   name: 'AddressDetail',
   label: 'Address Detail',
   viewType: 'DETAIL',
@@ -9,12 +9,12 @@ export const AddressDetail: ViewInit = {
   parts: [
     {
       id: 'a2',
-      component: 'FormLayout',
+      componentName: 'FormLayout',
       children: [
-        { id: 'a2-1', component: 'TextField', propertyName: 'street', props: { label: 'Street' } },
-        { id: 'a2-2', component: 'TextField', propertyName: 'city', props: { label: 'City' } },
-        { id: 'a2-3', component: 'TextField', propertyName: 'zip', props: { label: 'ZIP Code' } },
-        { id: 'a2-4', component: 'LookupField', propertyName: 'customerId', props: { label: 'Customer' } },
+        { id: 'a2-1', componentName: 'TextField', propertyName: 'street', props: { label: 'Street' } },
+        { id: 'a2-2', componentName: 'TextField', propertyName: 'city', props: { label: 'City' } },
+        { id: 'a2-3', componentName: 'TextField', propertyName: 'zip', props: { label: 'ZIP Code' } },
+        { id: 'a2-4', componentName: 'LookupField', propertyName: 'customerId', props: { label: 'Customer' } },
       ],
     },
   ],

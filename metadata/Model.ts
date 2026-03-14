@@ -1,10 +1,10 @@
-import { Property, PropertyConfig } from './Property';
-import { ModelConfig as ClientModelConfig } from '../client-metadata/Model';
+import { Property, PropertyRecord } from './Property';
+import { ModelConfig } from '../client-metadata/Model';
 
-export interface ModelConfig {
+export interface ModelRecord {
   name: string;
   label: string;
-  properties: PropertyConfig[];
+  properties: PropertyRecord[];
 }
 
 export class Model {
@@ -12,10 +12,10 @@ export class Model {
   public readonly label: string;
   public readonly properties: Property[];
 
-  constructor(config: ModelConfig) {
-    this.name = config.name;
-    this.label = config.label;
-    this.properties = config.properties.map(p => new Property(p));
+  constructor(record: ModelRecord) {
+    this.name = record.name;
+    this.label = record.label;
+    this.properties = record.properties.map(p => new Property(p));
   }
 
   getProperty(name: string): Property | undefined {
@@ -26,7 +26,7 @@ export class Model {
     return this.properties.find(p => p.isId);
   }
 
-  toClientConfig(): ClientModelConfig {
+  toClientConfig(): ModelConfig {
     return {
       name: this.name,
       label: this.label,
