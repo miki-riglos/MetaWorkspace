@@ -12,9 +12,8 @@ export function ListView({ view }: ViewComponentProps) {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const records = await view.module.dataService.getRecords(view.module.name, view.model.name);
+      const records = await view.module.dataService.getRecords(view.model.name);
       setData(records);
-
     } catch (e) {
       console.error('Failed to fetch data', e);
     } finally {

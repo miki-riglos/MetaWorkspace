@@ -24,7 +24,7 @@ export function TenantOverview({ tabInfo, openTab }: TenantOverviewProps) {
         {tenant?.modules.map((m: any) => (
           <button
             key={m.name}
-            onMouseDown={() => openTab({
+            onClick={() => openTab({
               tabType: 'module',
               title: m.label,
               parentId: tabInfo.id,

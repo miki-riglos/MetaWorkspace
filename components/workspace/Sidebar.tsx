@@ -35,7 +35,7 @@ export function Sidebar({ sidebarOpen, tenantStubs, openTab, logout }: SidebarPr
           <div key={tenant.id} className="space-y-2">
             {sidebarOpen && (
               <button
-                onMouseDown={() => openTab({
+                onClick={() => openTab({
                   tabType: 'tenant',
                   title: tenant.name,
                   tenantId: tenant.id
@@ -49,7 +49,7 @@ export function Sidebar({ sidebarOpen, tenantStubs, openTab, logout }: SidebarPr
             {tenant.moduleStubs.map(($module: any) => (
               <div key={$module.name} className="space-y-1">
                 <button
-                  onMouseDown={() => openTab({
+                  onClick={() => openTab({
                     tabType: 'module',
                     title: $module.label,
                     tenantId: tenant.id,
@@ -68,7 +68,7 @@ export function Sidebar({ sidebarOpen, tenantStubs, openTab, logout }: SidebarPr
                     {$module.views.map((view: any) => (
                       <button
                         key={view.name}
-                        onMouseDown={() => openTab({
+                        onClick={() => openTab({
                           tabType: 'view',
                           title: view.label,
                           tenantId: tenant.id,
@@ -89,7 +89,7 @@ export function Sidebar({ sidebarOpen, tenantStubs, openTab, logout }: SidebarPr
       </nav>
 
       <div className="p-4 border-t border-white/10">
-        <button 
+        <button
           onClick={logout}
           className={cn(
             "w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors",

@@ -26,7 +26,7 @@ export class Module {
     this.models = config.models.map(m => new Model(m, this));
     this.views = config.views.map(v => new View(v, this));
 
-    this.dataService = new DataService(this.tenant.id);
+    this.dataService = new DataService(this.tenant.id, this.name);
   }
 
   getModel(modelName: string): Model {

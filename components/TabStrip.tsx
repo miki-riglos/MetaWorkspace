@@ -66,12 +66,12 @@ export function TabStrip({
       {tabInfos.map((tabInfo) => (
         <div
           key={tabInfo.id}
-          onMouseDown={() => onTabClick(tabInfo.id)}
+          onClick={() => onTabClick(tabInfo.id)}
           onContextMenu={(e) => onContextMenu(e, tabInfo.id)}
           className={cn(
             "group relative flex items-center gap-2 cursor-pointer transition-all border-x border-t shrink-0",
-            variant === 'root' 
-              ? "px-4 py-2 text-sm font-medium rounded-t-lg" 
+            variant === 'root'
+              ? "px-4 py-2 text-sm font-medium rounded-t-lg"
               : "px-3 py-1.5 text-xs font-semibold rounded-t-md",
             getTabColor(tabInfo.tabType, activeTabId === tabInfo.id)
           )}
@@ -83,7 +83,7 @@ export function TabStrip({
             {getTabIcon(tabInfo.tabType)}
           </span>
           <span className="truncate max-w-[150px]">{tabInfo.title}</span>
-          
+
           {(tabInfo.tabType === 'tenant' || tabInfo.tabType === 'module') && onAddClick && (
             <button
               onClick={(e) => {
@@ -105,14 +105,14 @@ export function TabStrip({
           >
             <X className={cn(variant === 'root' ? "w-3 h-3" : "w-2.5 h-2.5")} />
           </button>
-          
+
           {activeTabId === tabInfo.id && variant === 'root' && (
             <motion.div
               layoutId="activeTabIndicator"
               className={cn("absolute bottom-[-1px] left-0 right-0 h-[2px]", getIndicatorColor(tabInfo.tabType))}
             />
           )}
-          
+
           {activeTabId === tabInfo.id && variant === 'nested' && (
             <div className={cn("absolute bottom-[-1px] left-0 right-0 h-[2px]", getIndicatorColor(tabInfo.tabType))} />
           )}

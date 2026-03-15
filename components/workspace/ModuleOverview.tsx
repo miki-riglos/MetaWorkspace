@@ -24,7 +24,7 @@ export function ModuleOverview({ tabInfo, openTab }: ModuleOverviewProps) {
         {$module?.views?.map((v: any) => (
           <button
             key={v.name}
-            onMouseDown={() => openTab({
+            onClick={() => openTab({
               tabType: 'view',
               title: v.label,
               parentId: tabInfo.id,

@@ -1,12 +1,14 @@
 export class DataService {
   private readonly _tenantId: string;
+  private readonly _moduleName: string;
 
-  constructor(tenantId: string) {
+  constructor(tenantId: string, moduleName: string) {
     this._tenantId = tenantId;
+    this._moduleName = moduleName;
   }
 
-  async getRecords(moduleName: string, modelName: string): Promise<any[]> {
-    const response = await fetch(`/api/${this._tenantId}/${moduleName}/${modelName}`);
+  async getRecords(modelName: string): Promise<any[]> {
+    const response = await fetch(`/api/${this._tenantId}/${this._moduleName}/${modelName}`);
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.error || 'Failed to fetch records');
