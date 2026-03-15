@@ -8,14 +8,11 @@ export const ModuleList: ViewRecord = {
   isMenuOption: true,
   parts: [
     {
-      id: 'm1',
       componentName: 'DataGrid',
-      options: {
-        columns: [
-          { field: 'label', header: 'Module Label' },
-          { field: 'name', header: 'System Name' },
-        ],
-      },
+      children: [
+        { componentName: 'DisplayField', propertyName: 'label', label: 'Module Label' },
+        { componentName: 'DisplayField', propertyName: 'name', label: 'System Name' },
+      ],
     },
   ],
 };

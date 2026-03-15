@@ -8,11 +8,10 @@ export const ModuleDetail: ViewRecord = {
   isMenuOption: false,
   parts: [
     {
-      id: 'md1',
       componentName: 'FormLayout',
       children: [
-        { id: 'md1-1', componentName: 'TextField', propertyName: 'label', options: { label: 'Module Label' } },
-        { id: 'md1-2', componentName: 'TextField', propertyName: 'name', options: { label: 'System Name' } },
+        { componentName: 'TextField', propertyName: 'label', label: 'Module Label' },
+        { componentName: 'TextField', propertyName: 'name', label: 'System Name' },
       ],
     },
   ],

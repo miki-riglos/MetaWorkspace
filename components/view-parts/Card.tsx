@@ -1,16 +1,25 @@
 import React from 'react';
 import { ViewPartComponent } from '../types';
+import { ViewPartRenderer } from '../ViewPartRenderer';
 
-export const Card: ViewPartComponent = ({ props, children }) => (
+export const Card: ViewPartComponent = ({ view, partConfig, record, data }) => (
   <div className="bg-white rounded-xl shadow-sm border border-black/5 overflow-hidden">
-    {(props.title || props.subtitle) && (
+    {(partConfig.options?.title || partConfig.options?.subtitle) && (
       <div className="p-6 border-b border-gray-100">
-        {props.title && <h3 className="text-lg font-bold text-gray-900">{props.title}</h3>}
-        {props.subtitle && <p className="text-sm text-gray-500">{props.subtitle}</p>}
+        {partConfig.options?.title && <h3 className="text-lg font-bold text-gray-900">{partConfig.options.title}</h3>}
+        {partConfig.options?.subtitle && <p className="text-sm text-gray-500">{partConfig.options.subtitle}</p>}
       </div>
     )}
     <div className="p-6">
-      {children}
+      {partConfig.children?.map((child, index) => (
+        <ViewPartRenderer
+          key={index}
+          view={view}
+          partConfig={child}
+          record={record}
+          data={data}
+        />
+      ))}
     </div>
   </div>
 );

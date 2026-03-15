@@ -41,9 +41,9 @@ export function DetailView({ view, idValues }: ViewComponentProps) {
     console.log('Saving record:', record);
   };
 
-  const handleRecordChange = (propertyName: string, value: any) => {
-    setRecord((prev: any) => ({ ...prev, [propertyName]: value }));
-  };
+  // const handleRecordChange = (propertyName: string, value: any) => {
+  //   setRecord((prev: any) => ({ ...prev, [propertyName]: value }));
+  // };
 
   if (loading) return <div className="p-8 animate-pulse text-gray-400">Loading detail view...</div>;
 
@@ -73,13 +73,12 @@ export function DetailView({ view, idValues }: ViewComponentProps) {
           </div>
         </header>
         <div className="space-y-6">
-          {view.parts.map(part => (
+          {view.parts.map((part, index) => (
             <ViewPartRenderer
-              key={part.id}
+              key={index}
               view={view}
               partConfig={part}
               record={record}
-              onRecordChange={handleRecordChange}
             />
           ))}
         </div>

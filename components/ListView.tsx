@@ -68,9 +68,9 @@ export function ListView({ view }: ViewComponentProps) {
           </div>
         </header>
         <div className="space-y-6">
-          {view.parts.map(part => (
+          {view.parts.map((part, index) => (
             <ViewPartRenderer
-              key={part.id}
+              key={index}
               view={view}
               partConfig={part}
               data={data}

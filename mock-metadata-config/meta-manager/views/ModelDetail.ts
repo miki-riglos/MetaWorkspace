@@ -8,25 +8,21 @@ export const ModelDetail: ViewRecord = {
   isMenuOption: false,
   parts: [
     {
-      id: 'mo-d1',
       componentName: 'FormLayout',
       children: [
-        { id: 'mo-d1-1', componentName: 'TextField', propertyName: 'label', options: { label: 'Model Label' } },
-        { id: 'mo-d1-2', componentName: 'TextField', propertyName: 'name', options: { label: 'System Name' } },
+        { componentName: 'TextField', propertyName: 'label', label: 'Model Label' },
+        { componentName: 'TextField', propertyName: 'name', label: 'System Name' },
       ],
     },
     {
-      id: 'mo-d2',
       componentName: 'DataGrid',
       propertyName: 'properties',
-      options: {
-        columns: [
-          { field: 'label', header: 'Property Label' },
-          { field: 'dataType', header: 'Type' },
-          { field: 'relation.targetModel', header: 'Target Model' },
-          { field: 'relation.cardinality', header: 'Cardinality' },
-        ],
-      },
+      children: [
+        { componentName: 'DataGridColumn', propertyName: 'label', label: 'Property Label' },
+        { componentName: 'DataGridColumn', propertyName: 'dataType', label: 'Type' },
+        { componentName: 'DataGridColumn', propertyName: 'relation.targetModel', label: 'Target Model' },
+        { componentName: 'DataGridColumn', propertyName: 'relation.cardinality', label: 'Cardinality' },
+      ],
     },
   ],
 };

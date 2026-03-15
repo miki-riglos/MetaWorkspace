@@ -8,15 +8,12 @@ export const ProductList: ViewRecord = {
   isMenuOption: true,
   parts: [
     {
-      id: 'p3',
       componentName: 'DataGrid',
-      options: {
-        columns: [
-          { field: 'sku', header: 'SKU' },
-          { field: 'name', header: 'Name' },
-          { field: 'price', header: 'Price' },
-        ],
-      },
+      children: [
+        { componentName: 'DisplayField', propertyName: 'sku', label: 'SKU' },
+        { componentName: 'DisplayField', propertyName: 'name', label: 'Name' },
+        { componentName: 'DisplayField', propertyName: 'price', label: 'Price' },
+      ],
     },
   ],
 };

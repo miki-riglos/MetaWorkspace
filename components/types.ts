@@ -1,4 +1,4 @@
-import { View } from '@/client-metadata/View';
+import { View, ViewPartConfig } from '@/client-metadata/View';
 import React from 'react';
 
 // View
@@ -12,11 +12,9 @@ export type ViewComponent = React.ComponentType<ViewComponentProps>;
 // ViewPart
 export interface ViewPartComponentProps {
   view: View;
-  props: any;
+  partConfig: ViewPartConfig;
   data?: any[];
-  value?: any;
-  onChange?: (v: any) => void;
-  children?: React.ReactNode;
+  record?: any;
 };
 
 export type ViewPartComponent = React.ComponentType<ViewPartComponentProps>;

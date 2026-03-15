@@ -1,62 +1,15 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { View, ViewPartConfig } from '@/client-metadata/View';
 import { viewPartRegistry } from '@/registries/viewPartRegistry';
+import { ViewPartComponentProps } from './types';
 
-interface ViewPartRendererProps {
-  view: View;
-  partConfig: ViewPartConfig;
-  data?: any[];
-  record?: any;
-  onRecordChange?: (propertyName: string, value: any) => void;
-}
+export function ViewPartRenderer(props: ViewPartComponentProps) {
+  const ViewPartComponent = useMemo(() => viewPartRegistry.get(props.partConfig.componentName), [props.partConfig.componentName]);
 
-export function ViewPartRenderer({
-  view,
-  partConfig,
-  data,
-  record,
-  onRecordChange
-}: ViewPartRendererProps) {
-  const ViewPartComponent = useMemo(() => viewPartRegistry.get(partConfig.componentName), [partConfig.componentName]);
+  if (!ViewPartComponent) {
+    return <div className="p-4 text-red-500">View Part component {props.partConfig.componentName} not found in registry.</div>;
+  }
 
-  // Find property definition if propertyName is specified
-  const property = view.model.properties.find((p: any) => p.name === partConfig.propertyName);
-
-  // Enriched props for the component
-  const enrichedProps = {
-    ...partConfig.options,
-    targetModel: property?.relation?.targetModel,
-    cardinality: property?.relation?.cardinality,
-  };
-
-  // Final props passed to the component
-  const componentProps = {
-    view,
-    props: enrichedProps,
-    data,
-    value: partConfig.propertyName && record ? record[partConfig.propertyName] : undefined,
-    onChange: partConfig.propertyName && onRecordChange
-      ? (val: any) => onRecordChange(partConfig.propertyName!, val)
-      : undefined,
-  };
-
-  // Render children recursively
-  const children = partConfig.children?.map(child => (
-    <ViewPartRenderer
-      key={child.id}
-      view={view}
-      partConfig={child}
-      data={data}
-      record={record}
-      onRecordChange={onRecordChange}
-    />
-  ));
-
-  return React.createElement(
-    ViewPartComponent,
-    { ...componentProps, key: partConfig.id },
-    children
-  );
+  return React.createElement(ViewPartComponent, { ...props });
 }

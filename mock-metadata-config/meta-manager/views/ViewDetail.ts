@@ -8,12 +8,11 @@ export const ViewDetail: ViewRecord = {
   isMenuOption: false,
   parts: [
     {
-      id: 'v-d1',
       componentName: 'FormLayout',
       children: [
-        { id: 'v-d1-1', componentName: 'TextField', propertyName: 'label', options: { label: 'View Label' } },
-        { id: 'v-d1-2', componentName: 'TextField', propertyName: 'name', options: { label: 'System Name' } },
-        { id: 'v-d1-3', componentName: 'SelectField', propertyName: 'type', options: { label: 'View Type', options: ['LIST', 'DETAIL'] } },
+        { componentName: 'TextField', propertyName: 'label', label: 'View Label' },
+        { componentName: 'TextField', propertyName: 'name', label: 'System Name' },
+        { componentName: 'SelectField', propertyName: 'type', label: 'View Type', options: ['LIST', 'DETAIL'] },
       ],
     },
   ],

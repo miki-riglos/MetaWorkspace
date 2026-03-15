@@ -8,14 +8,11 @@ export const ViewList: ViewRecord = {
   isMenuOption: true,
   parts: [
     {
-      id: 'v1',
       componentName: 'DataGrid',
-      options: {
-        columns: [
-          { field: 'label', header: 'View Label' },
-          { field: 'type', header: 'Type' },
-        ],
-      },
+      children: [
+        { componentName: 'DisplayField', propertyName: 'label', label: 'View Label' },
+        { componentName: 'DisplayField', propertyName: 'type', label: 'Type' },
+      ],
     },
   ],
 };

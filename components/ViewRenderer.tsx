@@ -4,15 +4,12 @@ import React, { useMemo } from 'react';
 import { viewRegistry } from '@/registries/viewRegistry';
 import { ViewComponentProps } from './types';
 
-export function ViewRenderer({ view, idValues }: ViewComponentProps) {
-  const ViewComponent = useMemo(() => viewRegistry.get(view.viewType), [view.viewType]);
+export function ViewRenderer(props: ViewComponentProps) {
+  const ViewComponent = useMemo(() => viewRegistry.get(props.view.viewType), [props.view.viewType]);
 
   if (!ViewComponent) {
-    return <div className="p-4 text-red-500">View type {view.viewType} not found in registry.</div>;
+    return <div className="p-4 text-red-500">View component {props.view.viewType} not found in registry.</div>;
   }
 
-  return React.createElement(ViewComponent, {
-    view,
-    idValues: idValues ?? {}
-  });
+  return React.createElement(ViewComponent, { ...props });
 }

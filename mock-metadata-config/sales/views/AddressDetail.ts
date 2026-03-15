@@ -8,13 +8,12 @@ export const AddressDetail: ViewRecord = {
   isMenuOption: false,
   parts: [
     {
-      id: 'a2',
       componentName: 'FormLayout',
       children: [
-        { id: 'a2-1', componentName: 'TextField', propertyName: 'street', options: { label: 'Street' } },
-        { id: 'a2-2', componentName: 'TextField', propertyName: 'city', options: { label: 'City' } },
-        { id: 'a2-3', componentName: 'TextField', propertyName: 'zip', options: { label: 'ZIP Code' } },
-        { id: 'a2-4', componentName: 'LookupField', propertyName: 'customerId', options: { label: 'Customer' } },
+        { componentName: 'TextField', propertyName: 'street', label: 'Street' },
+        { componentName: 'TextField', propertyName: 'city', label: 'City' },
+        { componentName: 'TextField', propertyName: 'zip', label: 'ZIP Code' },
+        { componentName: 'LookupField', propertyName: 'customerId', label: 'Customer' },
       ],
     },
   ],

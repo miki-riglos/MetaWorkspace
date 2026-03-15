@@ -8,15 +8,12 @@ export const AddressList: ViewRecord = {
   isMenuOption: true,
   parts: [
     {
-      id: 'a1',
       componentName: 'DataGrid',
-      options: {
-        columns: [
-          { field: 'street', header: 'Street' },
-          { field: 'city', header: 'City' },
-          { field: 'zip', header: 'ZIP' },
-        ],
-      },
+      children: [
+        { componentName: 'DisplayField', propertyName: 'street', label: 'Street' },
+        { componentName: 'DisplayField', propertyName: 'city', label: 'City' },
+        { componentName: 'DisplayField', propertyName: 'zip', label: 'ZIP' },
+      ],
     },
   ],
 };

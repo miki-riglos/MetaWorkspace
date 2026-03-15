@@ -12,7 +12,6 @@ export interface ViewConfig {
 }
 
 export interface ViewPartConfig {
-  id: string;
   componentName: string;
   modelName?: string;
   propertyName?: string;  // of the parent part model
