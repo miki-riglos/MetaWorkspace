@@ -1,20 +1,10 @@
-'use client';
-
-import React from 'react';
 import { Registry } from '@/lib/Registry';
-import { View } from '@/client-metadata/View';
 import { ListView } from '@/components/ListView';
 import { DetailView } from '@/components/DetailView';
-
-export interface ViewComponentProps {
-  view: View;
-  idValues?: Record<string, any>;
-}
-
-export type ViewComponent = React.ComponentType<ViewComponentProps>;
+import { ViewComponent } from '@/components/types';
 
 export const viewRegistry = new Registry<ViewComponent>();
 
 // Register standard views
-viewRegistry.register('LIST', ListView as ViewComponent);
-viewRegistry.register('DETAIL', DetailView as ViewComponent);
+viewRegistry.register('LIST', ListView);
+viewRegistry.register('DETAIL', DetailView);

@@ -11,15 +11,15 @@ export const ModelDetail: ViewRecord = {
       id: 'mo-d1',
       componentName: 'FormLayout',
       children: [
-        { id: 'mo-d1-1', componentName: 'TextField', propertyName: 'label', props: { label: 'Model Label' } },
-        { id: 'mo-d1-2', componentName: 'TextField', propertyName: 'name', props: { label: 'System Name' } },
+        { id: 'mo-d1-1', componentName: 'TextField', propertyName: 'label', options: { label: 'Model Label' } },
+        { id: 'mo-d1-2', componentName: 'TextField', propertyName: 'name', options: { label: 'System Name' } },
       ],
     },
     {
       id: 'mo-d2',
       componentName: 'DataGrid',
       propertyName: 'properties',
-      props: {
+      options: {
         columns: [
           { field: 'label', header: 'Property Label' },
           { field: 'dataType', header: 'Type' },

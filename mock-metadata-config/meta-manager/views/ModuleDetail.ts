@@ -11,8 +11,8 @@ export const ModuleDetail: ViewRecord = {
       id: 'md1',
       componentName: 'FormLayout',
       children: [
-        { id: 'md1-1', componentName: 'TextField', propertyName: 'label', props: { label: 'Module Label' } },
-        { id: 'md1-2', componentName: 'TextField', propertyName: 'name', props: { label: 'System Name' } },
+        { id: 'md1-1', componentName: 'TextField', propertyName: 'label', options: { label: 'Module Label' } },
+        { id: 'md1-2', componentName: 'TextField', propertyName: 'name', options: { label: 'System Name' } },
       ],
     },
   ],

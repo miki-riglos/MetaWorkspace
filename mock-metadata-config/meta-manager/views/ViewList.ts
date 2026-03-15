@@ -10,7 +10,7 @@ export const ViewList: ViewRecord = {
     {
       id: 'v1',
       componentName: 'DataGrid',
-      props: {
+      options: {
         columns: [
           { field: 'label', header: 'View Label' },
           { field: 'type', header: 'Type' },

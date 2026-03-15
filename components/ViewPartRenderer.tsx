@@ -6,7 +6,7 @@ import { viewPartRegistry } from '@/registries/viewPartRegistry';
 
 interface ViewPartRendererProps {
   view: View;
-  part: ViewPartConfig;
+  partConfig: ViewPartConfig;
   data?: any[];
   record?: any;
   onRecordChange?: (propertyName: string, value: any) => void;
@@ -14,25 +14,26 @@ interface ViewPartRendererProps {
 
 export function ViewPartRenderer({
   view,
-  part: partConfig,
+  partConfig,
   data,
   record,
   onRecordChange
 }: ViewPartRendererProps) {
-  const Component = useMemo(() => viewPartRegistry.get(partConfig.componentName), [partConfig.componentName]);
+  const ViewPartComponent = useMemo(() => viewPartRegistry.get(partConfig.componentName), [partConfig.componentName]);
 
   // Find property definition if propertyName is specified
   const property = view.model.properties.find((p: any) => p.name === partConfig.propertyName);
 
   // Enriched props for the component
   const enrichedProps = {
-    ...partConfig.props,
+    ...partConfig.options,
     targetModel: property?.relation?.targetModel,
     cardinality: property?.relation?.cardinality,
   };
 
   // Final props passed to the component
   const componentProps = {
+    view,
     props: enrichedProps,
     data,
     value: partConfig.propertyName && record ? record[partConfig.propertyName] : undefined,
@@ -46,7 +47,7 @@ export function ViewPartRenderer({
     <ViewPartRenderer
       key={child.id}
       view={view}
-      part={child}
+      partConfig={child}
       data={data}
       record={record}
       onRecordChange={onRecordChange}
@@ -54,7 +55,7 @@ export function ViewPartRenderer({
   ));
 
   return React.createElement(
-    Component,
+    ViewPartComponent,
     { ...componentProps, key: partConfig.id },
     children
   );

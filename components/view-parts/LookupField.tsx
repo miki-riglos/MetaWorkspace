@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewPartComponent } from './types';
+import { ViewPartComponent } from '../types';
 
 export const LookupField: ViewPartComponent = ({ props, value, onChange }) => {
   const [options, setOptions] = React.useState<any[]>([]);

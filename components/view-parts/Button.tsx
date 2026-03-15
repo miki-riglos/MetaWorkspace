@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewPartComponent } from './types';
+import { ViewPartComponent } from '../types';
 
 export const Button: ViewPartComponent = ({ props }) => (
   <button

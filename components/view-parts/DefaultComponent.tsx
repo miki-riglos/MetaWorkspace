@@ -1,6 +1,6 @@
 import React from 'react';
 import { Info } from 'lucide-react';
-import { ViewPartComponent } from './types';
+import { ViewPartComponent } from '../types';
 
 export const DefaultComponent: ViewPartComponent = ({ props, children }) => (
   <div className="p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50">

@@ -14,9 +14,11 @@ export interface ViewConfig {
 export interface ViewPartConfig {
   id: string;
   componentName: string;
-  props?: Record<string, any>;
+  modelName?: string;
+  propertyName?: string;  // of the parent part model
+  label?: string;
   children?: ViewPartConfig[];
-  propertyName?: string; // For detail views, which property this part binds to
+  options?: Record<string, any>;
 }
 
 export class View {

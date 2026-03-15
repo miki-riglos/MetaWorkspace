@@ -10,7 +10,7 @@ export const CustomerList: ViewRecord = {
     {
       id: 'p1',
       componentName: 'DataGrid',
-      props: {
+      options: {
         columns: [
           { field: 'name', header: 'Name' },
           { field: 'email', header: 'Email' },

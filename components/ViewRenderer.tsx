@@ -1,17 +1,10 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { View } from '@/client-metadata/View';
 import { viewRegistry } from '@/registries/viewRegistry';
-import { TabInfo } from '@/contexts/WorkspaceContext';
+import { ViewComponentProps } from './types';
 
-interface ViewRendererProps {
-  tabInfo: TabInfo;
-  view: View;
-  idValues?: Record<string, any>;
-}
-
-export function ViewRenderer({ tabInfo, view, idValues }: ViewRendererProps) {
+export function ViewRenderer({ view, idValues }: ViewComponentProps) {
   const ViewComponent = useMemo(() => viewRegistry.get(view.viewType), [view.viewType]);
 
   if (!ViewComponent) {

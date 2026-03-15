@@ -10,7 +10,7 @@ export const ModuleList: ViewRecord = {
     {
       id: 'm1',
       componentName: 'DataGrid',
-      props: {
+      options: {
         columns: [
           { field: 'label', header: 'Module Label' },
           { field: 'name', header: 'System Name' },

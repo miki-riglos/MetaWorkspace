@@ -10,7 +10,7 @@ export const AddressList: ViewRecord = {
     {
       id: 'a1',
       componentName: 'DataGrid',
-      props: {
+      options: {
         columns: [
           { field: 'street', header: 'Street' },
           { field: 'city', header: 'City' },

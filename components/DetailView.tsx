@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ViewPartRenderer } from './ViewPartRenderer';
 import { RefreshCw, Save } from 'lucide-react';
-import { ViewComponentProps } from '@/registries/viewRegistry';
+import { ViewComponentProps } from './types';
 
 export function DetailView({ view, idValues }: ViewComponentProps) {
   const [record, setRecord] = useState<any>({});
@@ -77,7 +77,7 @@ export function DetailView({ view, idValues }: ViewComponentProps) {
             <ViewPartRenderer
               key={part.id}
               view={view}
-              part={part}
+              partConfig={part}
               record={record}
               onRecordChange={handleRecordChange}
             />

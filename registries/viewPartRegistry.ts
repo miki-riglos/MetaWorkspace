@@ -1,7 +1,7 @@
 'use client';
 
 import { Registry } from '@/lib/Registry';
-import { ViewPartComponent } from '@/components/view-parts/types';
+import { ViewPartComponent } from '@/components/types';
 import { DefaultComponent } from '@/components/view-parts/DefaultComponent';
 import { Label } from '@/components/view-parts/Label';
 import { InputField } from '@/components/view-parts/InputField';

@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ViewPartRenderer } from './ViewPartRenderer';
 import { Plus, RefreshCw } from 'lucide-react';
-import { ViewComponentProps } from '@/registries/viewRegistry';
+import { ViewComponentProps } from './types';
 
 export function ListView({ view }: ViewComponentProps) {
   const [data, setData] = useState<any[]>([]);
@@ -72,7 +72,7 @@ export function ListView({ view }: ViewComponentProps) {
             <ViewPartRenderer
               key={part.id}
               view={view}
-              part={part}
+              partConfig={part}
               data={data}
             />
           ))}

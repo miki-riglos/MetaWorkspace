@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewPartComponent } from './types';
+import { ViewPartComponent } from '../types';
 
 export const InputField: ViewPartComponent = ({ props, value, onChange }) => (
   <div className="flex flex-col gap-1.5">

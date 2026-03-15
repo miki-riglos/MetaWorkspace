@@ -12,12 +12,12 @@ interface ViewTabProps {
 export function ViewTab({ tabInfo }: ViewTabProps) {
   return (
     <ViewProvider tabInfo={tabInfo}>
-      <ViewTabContent tabInfo={tabInfo} />
+      <ViewTabContent />
     </ViewProvider>
   );
 }
 
-function ViewTabContent({ tabInfo }: ViewTabProps) {
+function ViewTabContent() {
   const { view } = useView();
-  return <ViewRenderer tabInfo={tabInfo} view={view} />;
+  return <ViewRenderer view={view} />;
 }

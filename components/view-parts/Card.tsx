@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewPartComponent } from './types';
+import { ViewPartComponent } from '../types';
 
 export const Card: ViewPartComponent = ({ props, children }) => (
   <div className="bg-white rounded-xl shadow-sm border border-black/5 overflow-hidden">
