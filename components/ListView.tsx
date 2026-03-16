@@ -1,23 +1,23 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { ViewPartRenderer } from './ViewPartRenderer';
-import { Plus, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import { ViewComponentProps } from './types';
+import { ListViewContextType, useView } from '@/contexts/ViewContext';
 
-export function ListView({ view }: ViewComponentProps) {
-  const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+export function ListView(_props: ViewComponentProps) {
+  const { view, isLoading, setIsLoading, records, setRecords } = useView<ListViewContextType>();
 
   const fetchData = useCallback(async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const records = await view.module.dataService.getRecords(view.model.name);
-      setData(records);
+      setRecords(records);
     } catch (e) {
       console.error('Failed to fetch data', e);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }, [view]);
 
@@ -25,22 +25,7 @@ export function ListView({ view }: ViewComponentProps) {
     fetchData();
   }, [fetchData]);
 
-  const handleAddRecord = async () => {
-    // try {
-    //   const res = await fetch(`/api/${tenantId}/${moduleName}/${viewConfig.modelName}`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({}),
-    //   });
-    //   if (res.ok) {
-    //     fetchData();
-    //   }
-    // } catch (e) {
-    //   console.error('Failed to add record', e);
-    // }
-  };
-
-  if (loading) return <div className="p-8 animate-pulse text-gray-400">Loading list view...</div>;
+  if (isLoading) return <div className="p-8 animate-pulse text-gray-400">Loading list view...</div>;
 
   return (
     <div className="p-6 h-full overflow-auto bg-gray-50/50">
@@ -58,22 +43,14 @@ export function ListView({ view }: ViewComponentProps) {
               <RefreshCw className="w-4 h-4" />
               Refresh
             </button>
-            <button
-              onClick={handleAddRecord}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              Add Record
-            </button>
           </div>
         </header>
         <div className="space-y-6">
           {view.parts.map((part, index) => (
             <ViewPartRenderer
               key={index}
-              view={view}
               partConfig={part}
-              data={data}
+              data={records}
             />
           ))}
         </div>

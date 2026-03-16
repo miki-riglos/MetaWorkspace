@@ -1,9 +1,11 @@
 import React from 'react';
 import { ViewPartComponent } from '../types';
 
-export const LookupField: ViewPartComponent = ({ partConfig, record }) => {
+export const LookupField: ViewPartComponent = ({ partConfig, data }) => {
   const [options, _setOptions] = React.useState<any[]>([]);
   const [loading, _setLoading] = React.useState(false);
+
+  const value = data?.[partConfig.propertyName!] ?? '';
 
   // React.useEffect(() => {
   //   if (partConfig.targetModel && partConfig.tenantId && partConfig.moduleName) {
@@ -22,7 +24,7 @@ export const LookupField: ViewPartComponent = ({ partConfig, record }) => {
     <div className="flex flex-col gap-1.5">
       <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">{partConfig.label}</label>
       <select
-        value={record?.[partConfig.propertyName!] ?? ''}
+        value={value}
         disabled={loading}
         className="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all disabled:opacity-50"
       >

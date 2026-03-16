@@ -2,7 +2,7 @@ import React from 'react';
 import { ViewPartComponent } from '../types';
 import { ViewPartRenderer } from '../ViewPartRenderer';
 
-export const Card: ViewPartComponent = ({ view, partConfig, record, data }) => (
+export const Card: ViewPartComponent = ({ partConfig, data }) => (
   <div className="bg-white rounded-xl shadow-sm border border-black/5 overflow-hidden">
     {(partConfig.options?.title || partConfig.options?.subtitle) && (
       <div className="p-6 border-b border-gray-100">
@@ -14,9 +14,7 @@ export const Card: ViewPartComponent = ({ view, partConfig, record, data }) => (
       {partConfig.children?.map((child, index) => (
         <ViewPartRenderer
           key={index}
-          view={view}
           partConfig={child}
-          record={record}
           data={data}
         />
       ))}

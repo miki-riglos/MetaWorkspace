@@ -3,7 +3,7 @@
 import React from 'react';
 import { ViewRenderer } from '../ViewRenderer';
 import { TabInfo } from '@/contexts/WorkspaceContext';
-import { ViewProvider, useView } from '@/contexts/ViewContext';
+import { ViewProvider } from '@/contexts/ViewContext';
 
 interface ViewTabProps {
   tabInfo: TabInfo;
@@ -12,12 +12,7 @@ interface ViewTabProps {
 export function ViewTab({ tabInfo }: ViewTabProps) {
   return (
     <ViewProvider tabInfo={tabInfo}>
-      <ViewTabContent />
+      <ViewRenderer viewParams={{}} />
     </ViewProvider>
   );
-}
-
-function ViewTabContent() {
-  const { view } = useView();
-  return <ViewRenderer view={view} />;
 }

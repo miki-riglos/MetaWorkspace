@@ -1,16 +1,37 @@
 'use client';
 
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 import { TabInfo } from './WorkspaceContext';
+import { ViewType } from '@/metadata/View';
 import { View } from '@/client-metadata/View';
 import { useModule } from './ModuleContext';
 
-interface ViewContextType {
+export interface BaseViewContextType {
+  viewType: ViewType;
   view: View;
   tabInfo: TabInfo;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+  refresh: () => Promise<void>;
 }
 
-const ViewContext = createContext<ViewContextType | undefined>(undefined);
+export interface ListViewContextType extends BaseViewContextType {
+  viewType: 'LIST';
+  records: any[];
+  setRecords: (records: any[]) => void;
+}
+
+export interface DetailViewContextType extends BaseViewContextType {
+  viewType: 'DETAIL';
+  record: any;
+  setRecord: (record: any) => void;
+  handleRecordChange: (propertyName: string, value: any) => void;
+  save: () => Promise<void>;
+}
+
+export type ViewContextType = ListViewContextType | DetailViewContextType;
+
+export const ViewContext = createContext<ViewContextType | undefined>(undefined);
 
 export function ViewProvider({ tabInfo, children }: { tabInfo: TabInfo, children: React.ReactNode }) {
   const { module } = useModule();
@@ -19,17 +40,38 @@ export function ViewProvider({ tabInfo, children }: { tabInfo: TabInfo, children
     return module.getView(tabInfo.viewName!);
   }, [module, tabInfo.viewName]);
 
-  const context = useMemo<ViewContextType>(() => ({
-    view: view!,
-    tabInfo
-  }), [tabInfo, view]);
+  let context: ViewContextType;
 
-  if (!view) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-gray-500">Loading View...</div>
-      </div>
-    );
+  const [isLoading, setIsLoading] = useState(true);
+
+  if (view.viewType === 'LIST') {
+    const [records, setRecords] = useState<any[]>([]);
+
+    context = useMemo<ListViewContextType>(() => ({
+      viewType: 'LIST',
+      view: view!,
+      tabInfo,
+      isLoading,
+      setIsLoading,
+      records,
+      setRecords,
+      refresh: () => Promise.resolve(),
+    }), [tabInfo, view, isLoading, records]);
+  } else {
+    const [record, setRecord] = useState<any>({});
+
+    context = useMemo<DetailViewContextType>(() => ({
+      viewType: 'DETAIL',
+      view: view!,
+      tabInfo,
+      isLoading,
+      setIsLoading,
+      record,
+      setRecord,
+      refresh: () => Promise.resolve(),
+      handleRecordChange: () => { },
+      save: () => Promise.resolve(),
+    }), [tabInfo, view, isLoading, record]);
   }
 
   return (
@@ -39,10 +81,11 @@ export function ViewProvider({ tabInfo, children }: { tabInfo: TabInfo, children
   );
 }
 
-export function useView() {
+export function useView<T extends ViewContextType>() {
   const context = useContext(ViewContext);
   if (!context) {
     throw new Error('useView must be used within a ViewProvider');
   }
-  return context;
+  return context as T;
 }
+
