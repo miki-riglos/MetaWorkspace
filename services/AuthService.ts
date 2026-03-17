@@ -2,9 +2,6 @@ import { UserStub } from '@/metadata/User';
 import { User } from '@/client-metadata/User';
 
 export class AuthService {
-  /**
-   * Authenticates a user by email.
-   */
   static async login(email: string): Promise<User> {
     const response = await fetch('/auth/login', {
       method: 'POST',

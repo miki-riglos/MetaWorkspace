@@ -1,10 +1,11 @@
+import { ModelRecord } from '@/types';
 import { tenant1Data } from './tenant-1';
 import { tenant2Data } from './tenant-2';
 import { tenantAdminData } from './tenant-admin';
 
-export const INITIAL_DATA: Record<string, any[]> = {};
+export const INITIAL_DATA: Record<string, ModelRecord[]> = {};
 
-const processTenantData = (tenantId: string, data: Record<string, any[]>) => {
+const processTenantData = (tenantId: string, data: Record<string, ModelRecord[]>) => {
   Object.entries(data).forEach(([key, records]) => {
     INITIAL_DATA[`${tenantId}:${key}`] = records;
   });

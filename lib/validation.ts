@@ -1,3 +1,4 @@
+import { ModelRecord } from '@/types';
 import { Model } from '@/metadata/Model';
 
 export interface ValidationError {
@@ -5,11 +6,11 @@ export interface ValidationError {
   message: string;
 }
 
-export function validateRecord(model: Model, data: any): ValidationError[] {
+export function validateRecord(model: Model, record: ModelRecord): ValidationError[] {
   const errors: ValidationError[] = [];
 
   model.properties.forEach((prop) => {
-    const value = data[prop.name];
+    const value = record[prop.name];
 
     // Check required fields
     if (prop.required && (value === undefined || value === null || value === '')) {

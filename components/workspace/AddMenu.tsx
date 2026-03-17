@@ -3,6 +3,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Box, Layout } from 'lucide-react';
 import { TabInfo, useWorkspace } from '@/contexts/WorkspaceContext';
+import { ModuleStub } from '@/metadata/Module';
+import { ViewStub } from '@/metadata/View';
 
 interface AddMenuProps {
   addMenu: { id: string, x: number, y: number, type: 'tenant' | 'module' } | null;
@@ -49,23 +51,23 @@ export function AddMenu({
       </div>
       {addMenu.type === 'tenant' ? (
         <>
-          {tenantStub?.moduleStubs.map((m: any) => (
+          {tenantStub?.moduleStubs.map((modStub: ModuleStub) => (
             <button
-              key={m.name}
+              key={modStub.name}
               onClick={() => {
                 openTab({
                   tabType: 'module',
-                  title: m.label,
+                  title: modStub.label,
                   parentId: tabInfo.id,
                   tenantId: tabInfo.tenantId,
-                  moduleName: m.name
+                  moduleName: modStub.name
                 });
                 setAddMenu(null);
               }}
               className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
             >
               <Box className="w-4 h-4 opacity-50" />
-              {m.label}
+              {modStub.label}
             </button>
           ))}
         </>
@@ -74,24 +76,24 @@ export function AddMenu({
           {!moduleStub ? (
             <div className="px-4 py-2 text-xs text-gray-400 italic">Loading views...</div>
           ) : (
-            moduleStub.views.map((v: any) => (
+            moduleStub.viewStubs.map((viewStub: ViewStub) => (
               <button
-                key={v.name}
+                key={viewStub.name}
                 onClick={() => {
                   openTab({
                     tabType: 'view',
-                    title: v.label,
+                    title: viewStub.label,
                     parentId: tabInfo.id,
                     tenantId: tabInfo.tenantId,
                     moduleName: tabInfo.moduleName,
-                    viewName: v.name
+                    viewName: viewStub.name
                   });
                   setAddMenu(null);
                 }}
                 className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
               >
                 <Layout className="w-4 h-4 opacity-50" />
-                {v.label}
+                {viewStub.label}
               </button>
             ))
           )}

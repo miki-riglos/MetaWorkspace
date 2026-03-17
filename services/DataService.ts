@@ -1,3 +1,5 @@
+import { ModelRecord } from "@/types";
+
 export class DataService {
   private readonly _tenantId: string;
   private readonly _moduleName: string;
@@ -7,7 +9,7 @@ export class DataService {
     this._moduleName = moduleName;
   }
 
-  async getRecords(modelName: string): Promise<any[]> {
+  async getRecords(modelName: string): Promise<ModelRecord[]> {
     const response = await fetch(`/api/${this._tenantId}/${this._moduleName}/${modelName}`);
     if (!response.ok) {
       const error = await response.json();
@@ -16,7 +18,7 @@ export class DataService {
     return response.json();
   }
 
-  async getRecord(moduleName: string, modelName: string, id: string): Promise<any> {
+  async getRecord(moduleName: string, modelName: string, id: string): Promise<ModelRecord> {
     const response = await fetch(`/api/${this._tenantId}/${moduleName}/${modelName}/${id}`);
     if (!response.ok) {
       const error = await response.json();
@@ -25,7 +27,7 @@ export class DataService {
     return response.json();
   }
 
-  async createRecord(moduleName: string, modelName: string, data: any): Promise<any> {
+  async createRecord(moduleName: string, modelName: string, data: ModelRecord): Promise<ModelRecord> {
     const response = await fetch(`/api/${this._tenantId}/${moduleName}/${modelName}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -38,7 +40,7 @@ export class DataService {
     return response.json();
   }
 
-  async updateRecord(moduleName: string, modelName: string, id: string, data: any): Promise<any> {
+  async updateRecord(moduleName: string, modelName: string, id: string, data: ModelRecord): Promise<ModelRecord> {
     const response = await fetch(`/api/${this._tenantId}/${moduleName}/${modelName}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -51,7 +53,7 @@ export class DataService {
     return response.json();
   }
 
-  async deleteRecord(moduleName: string, modelName: string, id: string): Promise<any> {
+  async deleteRecord(moduleName: string, modelName: string, id: string): Promise<ModelRecord> {
     const response = await fetch(`/api/${this._tenantId}/${moduleName}/${modelName}/${id}`, {
       method: 'DELETE',
     });

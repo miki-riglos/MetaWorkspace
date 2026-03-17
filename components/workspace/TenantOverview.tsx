@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Database } from 'lucide-react';
+import { Module } from '@/client-metadata/Module';
 import { TabInfo } from '@/contexts/WorkspaceContext';
 import { useTenant } from '@/contexts/TenantContext';
 
@@ -21,20 +22,20 @@ export function TenantOverview({ tabInfo, openTab }: TenantOverviewProps) {
       <h2 className="text-2xl font-bold tracking-tight">{tabInfo.title}</h2>
       <p className="text-gray-500 mt-2">Tenant Overview</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 max-w-2xl w-full">
-        {tenant?.modules.map((m: any) => (
+        {tenant?.modules.map((mod: Module) => (
           <button
-            key={m.name}
+            key={mod.name}
             onClick={() => openTab({
               tabType: 'module',
-              title: m.label,
+              title: mod.label,
               parentId: tabInfo.id,
               tenantId: tabInfo.tenantId,
-              moduleName: m.name
+              moduleName: mod.name
             })}
             className="p-6 bg-white rounded-xl border border-black/5 shadow-sm hover:shadow-md hover:border-indigo-500/20 transition-all text-left group"
           >
-            <div className="text-sm font-bold group-hover:text-indigo-600 transition-colors">{m.label}</div>
-            <div className="text-xs text-gray-400 mt-1">{m.views?.length || 0} Views</div>
+            <div className="text-sm font-bold group-hover:text-indigo-600 transition-colors">{mod.label}</div>
+            <div className="text-xs text-gray-400 mt-1">{mod.views?.length || 0} Views</div>
           </button>
         ))}
       </div>

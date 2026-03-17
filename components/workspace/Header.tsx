@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Menu, User } from 'lucide-react';
+import { Menu, User as UserIcon } from 'lucide-react';
 import { TabStrip } from '../TabStrip';
+import { User } from '@/client-metadata/User';
 import { TabInfo } from '@/contexts/WorkspaceContext';
 
 interface HeaderProps {
@@ -14,7 +15,7 @@ interface HeaderProps {
   closeTab: (id: string) => void;
   handleAddClick: (e: React.MouseEvent, id: string) => void;
   handleContextMenu: (e: React.MouseEvent, id: string) => void;
-  user: any;
+  user: User | null;
 }
 
 export function Header({
@@ -55,7 +56,7 @@ export function Header({
           <div className="text-[10px] text-gray-400">{user?.email}</div>
         </div>
         <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center border border-indigo-200">
-          <User className="w-4 h-4 text-indigo-600" />
+          <UserIcon className="w-4 h-4 text-indigo-600" />
         </div>
       </div>
     </header>

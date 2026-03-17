@@ -1,8 +1,9 @@
 import React from 'react';
 import { ViewPartComponent } from '../types';
+import { ModelRecord } from '@/types';
 
 export const InputField: ViewPartComponent = ({ partConfig, data }) => {
-  const value = data?.[partConfig.propertyName!] ?? '';
+  const value = (data as ModelRecord)?.[partConfig.propertyName!] ?? '';
   return (
     <div className="flex flex-col gap-1.5">
       {partConfig.label && <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">{partConfig.label}</label>}

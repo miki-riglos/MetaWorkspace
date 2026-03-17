@@ -12,7 +12,7 @@ export interface ModuleRecord {
 export interface ModuleStub {
   name: string;
   label: string;
-  views: ViewStub[];
+  viewStubs: ViewStub[];
 }
 
 export class Module {
@@ -40,7 +40,7 @@ export class Module {
     return {
       name: this.name,
       label: this.label,
-      views: this.views
+      viewStubs: this.views
         .filter(v => v.isMenuOption)
         .map(v => v.toStub()),
     };

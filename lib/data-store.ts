@@ -1,7 +1,8 @@
 import { INITIAL_DATA } from '@/mock-data';
+import { ModelRecord } from '@/types';
 
 // Simple in-memory data store for the demo
-const STORE: Record<string, any[]> = { ...INITIAL_DATA };
+const STORE: Record<string, ModelRecord[]> = { ...INITIAL_DATA };
 
 export function getRecords(tenantId: string, moduleName: string, modelName: string) {
   const key = `${tenantId}:${moduleName}:${modelName}`;
@@ -13,7 +14,7 @@ export function getRecord(tenantId: string, moduleName: string, modelName: strin
   return records.find((r) => r.id === id);
 }
 
-export function insertRecord(tenantId: string, moduleName: string, modelName: string, data: any) {
+export function insertRecord(tenantId: string, moduleName: string, modelName: string, data: ModelRecord) {
   const key = `${tenantId}:${moduleName}:${modelName}`;
   if (!STORE[key]) STORE[key] = [];
   const newRecord = { ...data, id: Math.random().toString(36).substring(7) };
@@ -21,7 +22,7 @@ export function insertRecord(tenantId: string, moduleName: string, modelName: st
   return newRecord;
 }
 
-export function updateRecord(tenantId: string, moduleName: string, modelName: string, id: string, data: any) {
+export function updateRecord(tenantId: string, moduleName: string, modelName: string, id: string, data: ModelRecord) {
   const key = `${tenantId}:${moduleName}:${modelName}`;
   const records = STORE[key] || [];
   const index = records.findIndex((r) => r.id === id);

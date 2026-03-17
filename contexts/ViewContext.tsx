@@ -5,6 +5,7 @@ import { TabInfo } from './WorkspaceContext';
 import { ViewType } from '@/metadata/View';
 import { View } from '@/client-metadata/View';
 import { useModule } from './ModuleContext';
+import { ModelRecord, PropertyValue } from '@/types';
 
 export interface BaseViewContextType {
   viewType: ViewType;
@@ -17,15 +18,15 @@ export interface BaseViewContextType {
 
 export interface ListViewContextType extends BaseViewContextType {
   viewType: 'LIST';
-  records: any[];
-  setRecords: (records: any[]) => void;
+  records: ModelRecord[];
+  setRecords: (records: ModelRecord[]) => void;
 }
 
 export interface DetailViewContextType extends BaseViewContextType {
   viewType: 'DETAIL';
-  record: any;
-  setRecord: (record: any) => void;
-  handleRecordChange: (propertyName: string, value: any) => void;
+  record: ModelRecord;
+  setRecord: (record: ModelRecord) => void;
+  handleRecordChange: (propertyName: string, value: PropertyValue) => void;
   save: () => Promise<void>;
 }
 
@@ -45,7 +46,7 @@ export function ViewProvider({ tabInfo, children }: { tabInfo: TabInfo, children
   const [isLoading, setIsLoading] = useState(true);
 
   if (view.viewType === 'LIST') {
-    const [records, setRecords] = useState<any[]>([]);
+    const [records, setRecords] = useState<ModelRecord[]>([]);
 
     context = useMemo<ListViewContextType>(() => ({
       viewType: 'LIST',
@@ -58,7 +59,7 @@ export function ViewProvider({ tabInfo, children }: { tabInfo: TabInfo, children
       refresh: () => Promise.resolve(),
     }), [tabInfo, view, isLoading, records]);
   } else {
-    const [record, setRecord] = useState<any>({});
+    const [record, setRecord] = useState<ModelRecord>({});
 
     context = useMemo<DetailViewContextType>(() => ({
       viewType: 'DETAIL',

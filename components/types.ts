@@ -1,9 +1,10 @@
-import { View, ViewPartConfig } from '@/client-metadata/View';
 import React from 'react';
+import { ModelRecord } from '@/types';
+import { ViewPartConfig } from '@/client-metadata/View';
 
 // View
 export interface ViewParams {
-  idValues?: Record<string, any>;
+  idValues?: ModelRecord;
 }
 
 export interface ViewComponentProps {
@@ -15,7 +16,7 @@ export type ViewComponent = React.ComponentType<ViewComponentProps>;
 // ViewPart
 export interface ViewPartComponentProps {
   partConfig: ViewPartConfig;
-  data: any;
+  data: ModelRecord[] | ModelRecord;
 };
 
 export type ViewPartComponent = React.ComponentType<ViewPartComponentProps>;

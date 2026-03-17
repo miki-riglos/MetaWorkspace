@@ -1,11 +1,12 @@
 import React from 'react';
 import { ViewPartComponent } from '../types';
+import { ModelRecord } from '@/types';
 
 export const LookupField: ViewPartComponent = ({ partConfig, data }) => {
   const [options, _setOptions] = React.useState<any[]>([]);
   const [loading, _setLoading] = React.useState(false);
 
-  const value = data?.[partConfig.propertyName!] ?? '';
+  const value = (data as ModelRecord)?.[partConfig.propertyName!] ?? '';
 
   // React.useEffect(() => {
   //   if (partConfig.targetModel && partConfig.tenantId && partConfig.moduleName) {

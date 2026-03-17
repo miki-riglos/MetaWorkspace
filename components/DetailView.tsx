@@ -6,7 +6,6 @@ import { RefreshCw } from 'lucide-react';
 import { ViewComponentProps } from './types';
 import { DetailViewContextType, useView } from '@/contexts/ViewContext';
 
-
 export function DetailView({ viewParams }: ViewComponentProps) {
   const { view, isLoading, setIsLoading, record, setRecord } = useView<DetailViewContextType>();
 
