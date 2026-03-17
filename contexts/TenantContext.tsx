@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useMemo } from 'react';
 import { TabInfo } from './WorkspaceContext';
-import { Tenant } from '@/client-metadata/Tenant';
+import { Tenant } from '@/infrastructure/client/Tenant';
 import { useAuth } from './AuthContext';
 
 interface TenantContextType {

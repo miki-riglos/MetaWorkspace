@@ -49,7 +49,7 @@ export function ListView(_props: ViewComponentProps) {
           {view.parts.map((part, index) => (
             <ViewPartRenderer
               key={index}
-              partConfig={part}
+              part={part}
               data={records}
             />
           ))}

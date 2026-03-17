@@ -2,11 +2,11 @@ import React from 'react';
 import { ViewPartComponent } from '../types';
 import { ModelRecord } from '@/types';
 
-export const LookupField: ViewPartComponent = ({ partConfig, data }) => {
+export const LookupField: ViewPartComponent = ({ part, data }) => {
   const [options, _setOptions] = React.useState<any[]>([]);
   const [loading, _setLoading] = React.useState(false);
 
-  const value = (data as ModelRecord)?.[partConfig.propertyName!] ?? '';
+  const value = (data as ModelRecord)?.[part.propertyName!] ?? '';
 
   // React.useEffect(() => {
   //   if (partConfig.targetModel && partConfig.tenantId && partConfig.moduleName) {
@@ -23,7 +23,7 @@ export const LookupField: ViewPartComponent = ({ partConfig, data }) => {
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">{partConfig.label}</label>
+      <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">{part.label}</label>
       <select
         value={value}
         disabled={loading}

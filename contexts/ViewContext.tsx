@@ -2,8 +2,8 @@
 
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import { TabInfo } from './WorkspaceContext';
-import { ViewType } from '@/metadata/View';
-import { View } from '@/client-metadata/View';
+import { ViewType } from '@/infrastructure/View';
+import { View } from '@/infrastructure/client/View';
 import { useModule } from './ModuleContext';
 import { ModelRecord, PropertyValue } from '@/types';
 

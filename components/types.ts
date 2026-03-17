@@ -1,6 +1,6 @@
 import React from 'react';
 import { ModelRecord } from '@/types';
-import { ViewPartConfig } from '@/client-metadata/View';
+import { ViewPart } from '@/infrastructure/ViewPart';
 
 // View
 export interface ViewParams {
@@ -15,7 +15,7 @@ export type ViewComponent = React.ComponentType<ViewComponentProps>;
 
 // ViewPart
 export interface ViewPartComponentProps {
-  partConfig: ViewPartConfig;
+  part: ViewPart;
   data: ModelRecord[] | ModelRecord;
 };
 

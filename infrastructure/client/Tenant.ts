@@ -1,13 +1,7 @@
-import { TenantStub } from '@/metadata/Tenant';
-import { Module, ModuleConfig } from './Module';
-import { ConfigService } from '@/services/ConfigService';
 import { User } from './User';
-
-export interface TenantConfig {
-  id: string;
-  name: string;
-  modules: ModuleConfig[];
-}
+import { Module } from './Module';
+import { TenantStub } from '../stub/TenantStub';
+import { ConfigService } from '@/services/ConfigService';
 
 export class Tenant {
   private _configService: ConfigService;

@@ -1,4 +1,4 @@
-import { ModuleConfig } from '@/client-metadata/Module';
+import { ModuleDto } from '@/infrastructure/dto/ModuleDto';
 
 export class ConfigService {
   private readonly _tenantId: string;
@@ -7,7 +7,7 @@ export class ConfigService {
     this._tenantId = tenantId;
   }
 
-  async getModule(moduleName: string): Promise<ModuleConfig> {
+  async getModule(moduleName: string): Promise<ModuleDto> {
     const response = await fetch(`/cfg/${this._tenantId}/${moduleName}`);
 
     if (!response.ok) {
@@ -21,6 +21,6 @@ export class ConfigService {
       throw new Error(errorMessage);
     }
 
-    return await response.json() as ModuleConfig;
+    return await response.json() as ModuleDto;
   }
 }

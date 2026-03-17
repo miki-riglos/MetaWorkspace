@@ -1,5 +1,5 @@
 import { Registry } from '@/lib/Registry';
-import { Tenant } from '@/metadata/Tenant';
+import { Tenant } from '@/infrastructure/Tenant';
 import { MOCK_TENANTS } from '@/mock-metadata-config';
 
 export const tenantRegistry = new Registry<Tenant>();

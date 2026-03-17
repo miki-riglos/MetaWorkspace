@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
-import { TenantStub } from '@/metadata/Tenant';
+import { TenantStub } from '@/infrastructure/stub/TenantStub';
 import { useAuth } from '@/contexts/AuthContext';
 
 export type TabType = 'tenant' | 'module' | 'view';
@@ -62,7 +62,7 @@ function findTab(
     }
 
     // Default behavior for Overview clicks or other children (mostly Views)
-    return tabInfos.find(t => 
+    return tabInfos.find(t =>
       t.parentId === parentId &&
       t.tabType === tabType &&
       (tabType === 'view' ? t.viewName === viewName : true)
@@ -139,8 +139,8 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
         activeSubTabIds,
         activeTabId,
         tabData.tabType,
-        'tenant', 
-        tenantStub?.name || `Tenant ${tenantId}`, 
+        'tenant',
+        tenantStub?.name || `Tenant ${tenantId}`,
         tenantId
       );
 
@@ -214,13 +214,13 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       const idsToRemove = [id, ...getIdsToRemove(id)];
       const tabToClose = tabInfos.find(t => t.id === id);
       const newTabInfos = tabInfos.filter((t) => !idsToRemove.includes(t.id));
-      
+
       let nextActiveTabId = activeTabId;
       if (activeTabId === id || idsToRemove.includes(activeTabId || '')) {
         const rootTabs = newTabInfos.filter(t => !t.parentId);
         nextActiveTabId = rootTabs.length > 0 ? rootTabs[rootTabs.length - 1].id : null;
       }
-      
+
       const nextSubTabIds = { ...activeSubTabIds };
       if (tabToClose?.parentId && nextSubTabIds[tabToClose.parentId] === id) {
         const siblingTabs = newTabInfos.filter(t => t.parentId === tabToClose.parentId);
@@ -254,7 +254,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       const { tabInfos } = prev;
       const tabInfo = tabInfos.find(t => t.id === id);
       if (!tabInfo) return prev;
-      
+
       const getIdsToKeep = (parentId: string): string[] => {
         const children = tabInfos.filter(t => t.parentId === parentId);
         let ids = children.map(c => c.id);
@@ -280,7 +280,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       const { tabInfos, activeTabId } = prev;
       const index = tabInfos.findIndex((t) => t.id === id);
       if (index === -1) return prev;
-      
+
       const newTabInfos = tabInfos.slice(0, index + 1);
       let nextActiveTabId = activeTabId;
       if (tabInfos.findIndex(t => t.id === activeTabId) > index) {
@@ -307,7 +307,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
 
         const newId = `tab-${++runningId}`;
         idMap[targetId] = newId;
-        
+
         const duplicatedTab: TabInfo = {
           ...tabInfo,
           id: newId,
@@ -359,11 +359,11 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <WorkspaceContext.Provider value={{ 
+    <WorkspaceContext.Provider value={{
       ...state,
       tenantStubs,
-      openTab, 
-      closeTab, 
+      openTab,
+      closeTab,
       setActiveTab,
       setActiveSubTab,
       closeOthers,

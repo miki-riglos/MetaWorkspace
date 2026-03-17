@@ -1,13 +1,13 @@
-import { UserStub } from '@/metadata/User';
-import { TenantStub } from '@/metadata/Tenant';
 import { Tenant } from './Tenant';
+import { UserStub } from '../stub/UserStub';
+import { TenantStub } from '../stub/TenantStub';
 
 export class User {
   public readonly id: string;
   public readonly email: string;
   public readonly name: string;
   public readonly tenantStubs: TenantStub[];  // entire hierhachy of modules and views
-  public readonly tenants: Tenant[];          // each tenat module to be loaded as needed
+  public readonly tenants: Tenant[];          // each tenant module to be loaded as needed
 
   constructor(stub: UserStub) {
     this.id = stub.id;

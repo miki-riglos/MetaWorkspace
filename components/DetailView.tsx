@@ -60,7 +60,7 @@ export function DetailView({ viewParams }: ViewComponentProps) {
           {view.parts.map((part, index) => (
             <ViewPartRenderer
               key={index}
-              partConfig={part}
+              part={part}
               data={record}
             />
           ))}

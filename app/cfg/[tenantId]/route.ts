@@ -7,13 +7,13 @@ export async function GET(
 ) {
   try {
     const { tenantId } = await params;
-    
+
     const tenant = tenantRegistry.get(tenantId);
     if (!tenant) {
       return NextResponse.json({ error: `Tenant ${tenantId} not found` }, { status: 404 });
     }
 
-    return NextResponse.json(tenant.toClientConfig());
+    return NextResponse.json(tenant.toDto());
   } catch (error) {
     console.error('API Error (GET /cfg/[tenantId]):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Database } from 'lucide-react';
-import { Module } from '@/client-metadata/Module';
+import { Module } from '@/infrastructure/client/Module';
 import { TabInfo } from '@/contexts/WorkspaceContext';
 import { useTenant } from '@/contexts/TenantContext';
 

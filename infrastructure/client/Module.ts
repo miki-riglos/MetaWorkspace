@@ -1,14 +1,8 @@
 import { DataService } from '@/services/DataService';
-import { Model, ModelConfig } from './Model';
+import { Model } from './Model';
 import { Tenant } from './Tenant';
-import { View, ViewConfig } from './View';
-
-export interface ModuleConfig {
-  name: string;
-  label: string;
-  models: ModelConfig[];
-  views: ViewConfig[];
-}
+import { View } from './View';
+import { ModuleDto } from '../dto/ModuleDto';
 
 export class Module {
   public readonly tenant: Tenant;
@@ -19,12 +13,12 @@ export class Module {
 
   public readonly dataService: DataService;
 
-  constructor(config: ModuleConfig, tenant: Tenant) {
+  constructor(dto: ModuleDto, tenant: Tenant) {
     this.tenant = tenant;
-    this.name = config.name;
-    this.label = config.label;
-    this.models = config.models.map(m => new Model(m, this));
-    this.views = config.views.map(v => new View(v, this));
+    this.name = dto.name;
+    this.label = dto.label;
+    this.models = dto.models.map(m => new Model(m, this));
+    this.views = dto.views.map(v => new View(v, this));
 
     this.dataService = new DataService(this.tenant.id, this.name);
   }

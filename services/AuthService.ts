@@ -1,5 +1,5 @@
-import { UserStub } from '@/metadata/User';
-import { User } from '@/client-metadata/User';
+import { UserStub } from '@/infrastructure/stub/UserStub';
+import { User } from '@/infrastructure/client/User';
 
 export class AuthService {
   static async login(email: string): Promise<User> {

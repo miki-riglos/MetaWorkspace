@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MOCK_USERS } from '@/mock-metadata-config/MOCK_USERS';
 import { MOCK_TENANTS } from '@/mock-metadata-config/MOCK_TENANTS';
-import { User } from '@/metadata/User';
+import { User } from '@/infrastructure/User';
 
 export async function POST(req: NextRequest) {
   try {

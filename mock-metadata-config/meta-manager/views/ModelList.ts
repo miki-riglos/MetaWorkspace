@@ -1,6 +1,6 @@
-import { ViewRecord } from '@/metadata/View';
+import { ViewStored } from '@/infrastructure/stored/ViewStored';
 
-export const ModelList: ViewRecord = {
+export const ModelList: ViewStored = {
   name: 'ModelList',
   label: 'Models',
   viewType: 'LIST',

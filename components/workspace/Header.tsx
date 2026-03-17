@@ -3,7 +3,7 @@
 import React from 'react';
 import { Menu, User as UserIcon } from 'lucide-react';
 import { TabStrip } from '../TabStrip';
-import { User } from '@/client-metadata/User';
+import { User } from '@/infrastructure/client/User';
 import { TabInfo } from '@/contexts/WorkspaceContext';
 
 interface HeaderProps {

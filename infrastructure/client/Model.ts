@@ -1,11 +1,6 @@
-import { Property, PropertyConfig } from './Property';
+import { Property } from './Property';
 import { Module } from './Module';
-
-export interface ModelConfig {
-  name: string;
-  label: string;
-  properties: PropertyConfig[];
-}
+import { ModelDto } from '../dto/ModelDto';
 
 export class Model {
   public readonly module: Module;
@@ -13,11 +8,11 @@ export class Model {
   public readonly label: string;
   public readonly properties: Property[];
 
-  constructor(config: ModelConfig, module: Module) {
+  constructor(dto: ModelDto, module: Module) {
     this.module = module;
-    this.name = config.name;
-    this.label = config.label;
-    this.properties = config.properties.map(p => new Property(p, this));
+    this.name = dto.name;
+    this.label = dto.label;
+    this.properties = dto.properties.map(p => new Property(p, this));
   }
 
   getProperty(propertyName: string): Property | undefined {

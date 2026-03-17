@@ -3,8 +3,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Box, Layout } from 'lucide-react';
 import { TabInfo, useWorkspace } from '@/contexts/WorkspaceContext';
-import { ModuleStub } from '@/metadata/Module';
-import { ViewStub } from '@/metadata/View';
+import { ModuleStub } from '@/infrastructure/stub/ModuleStub';
+import { ViewStub } from '@/infrastructure/stub/ViewStub';
 
 interface AddMenuProps {
   addMenu: { id: string, x: number, y: number, type: 'tenant' | 'module' } | null;

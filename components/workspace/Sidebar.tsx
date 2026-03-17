@@ -5,9 +5,9 @@ import { Layout, Database, Box, LogOut } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { TabInfo } from '@/contexts/WorkspaceContext';
-import { ModuleStub } from '@/metadata/Module';
-import { ViewStub } from '@/metadata/View';
-import { TenantStub } from '@/metadata/Tenant';
+import { ModuleStub } from '@/infrastructure/stub/ModuleStub';
+import { ViewStub } from '@/infrastructure/stub/ViewStub';
+import { TenantStub } from '@/infrastructure/stub/TenantStub';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

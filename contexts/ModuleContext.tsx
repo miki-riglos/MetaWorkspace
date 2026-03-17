@@ -2,8 +2,8 @@
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { TabInfo } from './WorkspaceContext';
-import { Module } from '@/client-metadata/Module';
 import { useTenant } from './TenantContext';
+import { Module } from '@/infrastructure/client/Module';
 
 interface ModuleContextType {
   module: Module;

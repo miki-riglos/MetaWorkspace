@@ -4,7 +4,7 @@ import React from 'react';
 import { Box } from 'lucide-react';
 import { TabInfo } from '@/contexts/WorkspaceContext';
 import { useModule } from '@/contexts/ModuleContext';
-import { View } from '@/client-metadata/View';
+import { View } from '@/infrastructure/client/View';
 
 interface ModuleOverviewProps {
   tabInfo: TabInfo;

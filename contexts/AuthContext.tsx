@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { AuthService } from '@/services/AuthService';
-import { User } from '@/client-metadata/User';
+import { User } from '@/infrastructure/client/User';
 
 interface AuthContextType {
   user: User | null;

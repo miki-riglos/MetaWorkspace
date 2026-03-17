@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName } = await params;
-    
+
     const tenant = tenantRegistry.get(tenantId);
     if (!tenant) {
       return NextResponse.json({ error: `Tenant ${tenantId} not found` }, { status: 404 });
@@ -18,7 +18,7 @@ export async function GET(
       return NextResponse.json({ error: `Module ${moduleName} not found in tenant ${tenantId}` }, { status: 404 });
     }
 
-    return NextResponse.json(mod.toClientConfig());
+    return NextResponse.json(mod.toDto());
   } catch (error) {
     console.error('API Error (GET /cfg):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

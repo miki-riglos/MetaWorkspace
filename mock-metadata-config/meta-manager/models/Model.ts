@@ -1,6 +1,6 @@
-import { ModelRecord } from '@/metadata/Model';
+import { ModelStored } from '@/infrastructure/stored/ModelStored';
 
-export const ModelModel: ModelRecord = {
+export const ModelModel: ModelStored = {
   name: 'Model',
   label: 'Model',
   properties: [
