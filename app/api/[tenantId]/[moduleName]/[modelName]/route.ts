@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { INITIAL_DATA } from '@/mock-data';
-
-// This is a generic mock data handler. 
-// In a real app, this would connect to a database.
+import { getRecords, insertRecord } from '@/lib/data-store';
+import { ModelRecord } from '@/types';
 
 export async function GET(
   req: NextRequest,
@@ -10,23 +8,9 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName } = await params;
-    
-    // Key format in INITIAL_DATA is tenantId:moduleName:modelName
-    const key = `${tenantId}:${moduleName}:${modelName}`;
-    
-    // Try exact match first
-    let data = INITIAL_DATA[key];
+    const records = getRecords(tenantId, moduleName, modelName);
 
-    // If not found, try case-insensitive match
-    if (!data) {
-      const lowerKey = key.toLowerCase();
-      const foundKey = Object.keys(INITIAL_DATA).find(k => k.toLowerCase() === lowerKey);
-      if (foundKey) {
-        data = INITIAL_DATA[foundKey];
-      }
-    }
-
-    return NextResponse.json(data || []);
+    return NextResponse.json(records);
   } catch (error) {
     console.error('API Error (GET):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
@@ -38,9 +22,14 @@ export async function POST(
   { params }: { params: Promise<{ tenantId: string; moduleName: string; modelName: string }> }
 ) {
   try {
-    const data = await req.json();
-    return NextResponse.json({ id: Math.random().toString(36).substring(7), ...data });
+    const { tenantId, moduleName, modelName } = await params;
+    const data = await req.json() as ModelRecord;
+    
+    const newRecord = insertRecord(tenantId, moduleName, modelName, data);
+    
+    return NextResponse.json(newRecord, { status: 201 });
   } catch (error) {
+    console.error('API Error (POST):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

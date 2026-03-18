@@ -1,12 +1,53 @@
-import { INITIAL_DATA } from '@/mock-data';
 import { ModelRecord } from '@/types';
+import fs from 'fs';
+import path from 'path';
 
-// Simple in-memory data store for the demo
-const STORE: Record<string, ModelRecord[]> = { ...INITIAL_DATA };
+// Ensure db directory exists
+const dbDir = path.join(process.cwd(), 'db');
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
+
+function getFilePath(tenantId: string, moduleName: string, modelName: string) {
+  return path.join(dbDir, tenantId, moduleName, `${modelName}.json`);
+}
+
+function readData(tenantId: string, moduleName: string, modelName: string): ModelRecord[] {
+  const filePath = getFilePath(tenantId, moduleName, modelName);
+  
+  if (fs.existsSync(filePath)) {
+    try {
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      return JSON.parse(fileContent);
+    } catch (error) {
+      console.error(`Error reading ${filePath}:`, error);
+      return [];
+    }
+  }
+
+  // If no file exists, initialize it with an empty array
+  writeData(tenantId, moduleName, modelName, []);
+  
+  return [];
+}
+
+function writeData(tenantId: string, moduleName: string, modelName: string, data: ModelRecord[]) {
+  const filePath = getFilePath(tenantId, moduleName, modelName);
+  const dirPath = path.dirname(filePath);
+  
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (error) {
+    console.error(`Error writing ${filePath}:`, error);
+  }
+}
 
 export function getRecords(tenantId: string, moduleName: string, modelName: string) {
-  const key = `${tenantId}:${moduleName}:${modelName}`;
-  return STORE[key] || [];
+  return readData(tenantId, moduleName, modelName);
 }
 
 export function getRecord(tenantId: string, moduleName: string, modelName: string, id: string) {
@@ -15,30 +56,30 @@ export function getRecord(tenantId: string, moduleName: string, modelName: strin
 }
 
 export function insertRecord(tenantId: string, moduleName: string, modelName: string, data: ModelRecord) {
-  const key = `${tenantId}:${moduleName}:${modelName}`;
-  if (!STORE[key]) STORE[key] = [];
+  const records = readData(tenantId, moduleName, modelName);
   const newRecord = { ...data, id: Math.random().toString(36).substring(7) };
-  STORE[key].push(newRecord);
+  records.push(newRecord);
+  writeData(tenantId, moduleName, modelName, records);
   return newRecord;
 }
 
 export function updateRecord(tenantId: string, moduleName: string, modelName: string, id: string, data: ModelRecord) {
-  const key = `${tenantId}:${moduleName}:${modelName}`;
-  const records = STORE[key] || [];
+  const records = readData(tenantId, moduleName, modelName);
   const index = records.findIndex((r) => r.id === id);
   if (index !== -1) {
     records[index] = { ...records[index], ...data };
+    writeData(tenantId, moduleName, modelName, records);
     return records[index];
   }
   return null;
 }
 
 export function deleteRecord(tenantId: string, moduleName: string, modelName: string, id: string) {
-  const key = `${tenantId}:${moduleName}:${modelName}`;
-  const records = STORE[key] || [];
+  const records = readData(tenantId, moduleName, modelName);
   const index = records.findIndex((r) => r.id === id);
   if (index !== -1) {
     const deleted = records.splice(index, 1);
+    writeData(tenantId, moduleName, modelName, records);
     return deleted[0];
   }
   return null;

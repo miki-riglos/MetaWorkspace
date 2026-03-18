@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { INITIAL_DATA } from '@/mock-data';
+import { getRecord, updateRecord, deleteRecord } from '@/lib/data-store';
+import { ModelRecord } from '@/types';
 
 export async function GET(
   req: NextRequest,
@@ -7,19 +8,7 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName, id } = await params;
-    
-    const key = `${tenantId}:${moduleName}:${modelName}`;
-    let records = INITIAL_DATA[key];
-
-    if (!records) {
-      const lowerKey = key.toLowerCase();
-      const foundKey = Object.keys(INITIAL_DATA).find(k => k.toLowerCase() === lowerKey);
-      if (foundKey) {
-        records = INITIAL_DATA[foundKey];
-      }
-    }
-
-    const record = (records || []).find(r => String(r.id) === String(id));
+    const record = getRecord(tenantId, moduleName, modelName, id);
 
     if (!record) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
@@ -37,10 +26,18 @@ export async function PUT(
   { params }: { params: Promise<{ tenantId: string; moduleName: string; modelName: string; id: string }> }
 ) {
   try {
-    const { id } = await params;
-    const data = await req.json();
-    return NextResponse.json({ id, ...data });
+    const { tenantId, moduleName, modelName, id } = await params;
+    const data = await req.json() as ModelRecord;
+    
+    const updatedRecord = updateRecord(tenantId, moduleName, modelName, id, data);
+
+    if (!updatedRecord) {
+      return NextResponse.json({ error: 'Record not found or could not be updated' }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedRecord);
   } catch (error) {
+    console.error('API Error (PUT Record):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
@@ -50,8 +47,16 @@ export async function DELETE(
   { params }: { params: Promise<{ tenantId: string; moduleName: string; modelName: string; id: string }> }
 ) {
   try {
-    return NextResponse.json({ success: true });
+    const { tenantId, moduleName, modelName, id } = await params;
+    const deletedRecord = deleteRecord(tenantId, moduleName, modelName, id);
+
+    if (!deletedRecord) {
+       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, deleted: deletedRecord });
   } catch (error) {
+    console.error('API Error (DELETE Record):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
