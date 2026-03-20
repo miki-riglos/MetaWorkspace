@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { persistanceService } from '@/lib/persistanceService';
+import { dataService } from '@/lib/dataService';
 import { ModelRecord } from '@/types';
 
 export async function GET(
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName, id } = await params;
-    const record = persistanceService.getRecord(tenantId, moduleName, modelName, id);
+    const record = dataService.getRecord(tenantId, moduleName, modelName, id);
 
     if (!record) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
@@ -29,7 +29,7 @@ export async function PUT(
     const { tenantId, moduleName, modelName, id } = await params;
     const data = await req.json() as ModelRecord;
 
-    const updatedRecord = persistanceService.updateRecord(tenantId, moduleName, modelName, id, data);
+    const updatedRecord = dataService.updateRecord(tenantId, moduleName, modelName, id, data);
 
     if (!updatedRecord) {
       return NextResponse.json({ error: 'Record not found or could not be updated' }, { status: 404 });
@@ -48,7 +48,7 @@ export async function DELETE(
 ) {
   try {
     const { tenantId, moduleName, modelName, id } = await params;
-    const deletedRecord = persistanceService.deleteRecord(tenantId, moduleName, modelName, id);
+    const deletedRecord = dataService.deleteRecord(tenantId, moduleName, modelName, id);
 
     if (!deletedRecord) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });

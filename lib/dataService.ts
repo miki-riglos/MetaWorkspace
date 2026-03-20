@@ -2,12 +2,12 @@ import { ModelRecord } from '@/types';
 import fs from 'fs';
 import path from 'path';
 
-export class PersistanceService {
+export class DataService {
   private dbDir: string;
 
   constructor() {
     // Ensure db directory exists
-    this.dbDir = path.join(process.cwd(), '../MetaWorkspaceStore/db');
+    this.dbDir = path.join(process.cwd(), '../MetaWorkspaceStore/db-data');
     if (!fs.existsSync(this.dbDir)) {
       fs.mkdirSync(this.dbDir, { recursive: true });
     }
@@ -91,4 +91,4 @@ export class PersistanceService {
   }
 }
 
-export const persistanceService = new PersistanceService();
+export const dataService = new DataService();

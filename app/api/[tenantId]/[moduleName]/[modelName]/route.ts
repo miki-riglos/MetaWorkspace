@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { persistanceService } from '@/lib/persistanceService';
+import { dataService } from '@/lib/dataService';
 import { ModelRecord } from '@/types';
 
 export async function GET(
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName } = await params;
-    const records = persistanceService.getRecords(tenantId, moduleName, modelName);
+    const records = dataService.getRecords(tenantId, moduleName, modelName);
 
     return NextResponse.json(records);
   } catch (error) {
@@ -25,7 +25,7 @@ export async function POST(
     const { tenantId, moduleName, modelName } = await params;
     const data = await req.json() as ModelRecord;
 
-    const newRecord = persistanceService.insertRecord(tenantId, moduleName, modelName, data);
+    const newRecord = dataService.insertRecord(tenantId, moduleName, modelName, data);
 
     return NextResponse.json(newRecord, { status: 201 });
   } catch (error) {
