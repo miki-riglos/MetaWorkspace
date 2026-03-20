@@ -1,0 +1,55 @@
+{
+  "name": "CustomerDetail",
+  "label": "Customer Detail",
+  "viewType": "DETAIL",
+  "modelName": "Customer",
+  "isMenuOption": false,
+  "parts": [
+    {
+      "componentName": "FormLayout",
+      "children": [
+        {
+          "componentName": "TextField",
+          "propertyName": "name",
+          "label": "Full Name"
+        },
+        {
+          "componentName": "TextField",
+          "propertyName": "email",
+          "label": "Email Address"
+        },
+        {
+          "componentName": "SelectField",
+          "propertyName": "status",
+          "label": "Status",
+          "options": [
+            "Active",
+            "Inactive"
+          ]
+        }
+      ]
+    },
+    {
+      "componentName": "RelationGrid",
+      "propertyName": "addresses",
+      "label": "Customer Addresses",
+      "children": [
+        {
+          "componentName": "DataGridColumn",
+          "propertyName": "street",
+          "label": "Street"
+        },
+        {
+          "componentName": "DataGridColumn",
+          "propertyName": "city",
+          "label": "City"
+        },
+        {
+          "componentName": "DataGridColumn",
+          "propertyName": "zip",
+          "label": "ZIP"
+        }
+      ]
+    }
+  ]
+}

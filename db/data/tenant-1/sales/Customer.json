@@ -1,0 +1,33 @@
+[
+  {
+    "id": "1",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "status": "Active",
+    "addresses": [
+      {
+        "street": "123 Main St",
+        "city": "New York",
+        "zip": "10001"
+      },
+      {
+        "street": "456 Park Ave",
+        "city": "New York",
+        "zip": "10022"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "status": "Inactive",
+    "addresses": [
+      {
+        "street": "789 Broadway",
+        "city": "Los Angeles",
+        "zip": "90001"
+      }
+    ]
+  }
+]

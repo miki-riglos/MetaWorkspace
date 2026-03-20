@@ -3,56 +3,43 @@ import fs from 'fs';
 import path from 'path';
 
 export class DataService {
-  private dbDir: string;
+  private _dbDir: string;
+  private _cache: Map<string, ModelRecord[]> = new Map();
 
   constructor() {
-    // Ensure db directory exists
-    this.dbDir = path.join(process.cwd(), '../MetaWorkspaceStore/db-data');
-    if (!fs.existsSync(this.dbDir)) {
-      fs.mkdirSync(this.dbDir, { recursive: true });
-    }
+    this._dbDir = path.join(process.cwd(), './db/data');
+  }
+
+  private getCacheKey(tenantId: string, moduleName: string, modelName: string) {
+    return `${tenantId}:${moduleName}:${modelName}`;
   }
 
   private getFilePath(tenantId: string, moduleName: string, modelName: string) {
-    return path.join(this.dbDir, tenantId, moduleName, `${modelName}.json`);
+    return path.join(this._dbDir, tenantId, moduleName, `${modelName}.json`);
   }
 
-  private readData(tenantId: string, moduleName: string, modelName: string): ModelRecord[] {
-    const filePath = this.getFilePath(tenantId, moduleName, modelName);
-
-    if (fs.existsSync(filePath)) {
-      try {
-        const fileContent = fs.readFileSync(filePath, 'utf-8');
-        return JSON.parse(fileContent);
-      } catch (error) {
-        console.error(`Error reading ${filePath}:`, error);
-        return [];
+  private loadDataIfNeeded(tenantId: string, moduleName: string, modelName: string) {
+    const key = this.getCacheKey(tenantId, moduleName, modelName);
+    if (!this._cache.has(key)) {
+      const filePath = this.getFilePath(tenantId, moduleName, modelName);
+      if (fs.existsSync(filePath)) {
+        try {
+          const fileContent = fs.readFileSync(filePath, 'utf-8');
+          this._cache.set(key, JSON.parse(fileContent) as ModelRecord[]);
+        } catch (error) {
+          console.error(`Error reading ${filePath}:`, error);
+          this._cache.set(key, []);
+        }
+      } else {
+        this._cache.set(key, []);
       }
     }
-
-    // If no file exists, initialize it with an empty array
-    this.writeData(tenantId, moduleName, modelName, []);
-
-    return [];
   }
 
-  private writeData(tenantId: string, moduleName: string, modelName: string, data: ModelRecord[]) {
-    const filePath = this.getFilePath(tenantId, moduleName, modelName);
-    const dirPath = path.dirname(filePath);
-
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
-
-    try {
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-    } catch (error) {
-      console.error(`Error writing ${filePath}:`, error);
-    }
-  }
-
-  public getRecords(tenantId: string, moduleName: string, modelName: string) {
-    return this.readData(tenantId, moduleName, modelName);
+  public getRecords(tenantId: string, moduleName: string, modelName: string): ModelRecord[] {
+    this.loadDataIfNeeded(tenantId, moduleName, modelName);
+    const key = this.getCacheKey(tenantId, moduleName, modelName);
+    return this._cache.get(key) || [];
   }
 
   public getRecord(tenantId: string, moduleName: string, modelName: string, id: string) {
@@ -61,34 +48,36 @@ export class DataService {
   }
 
   public insertRecord(tenantId: string, moduleName: string, modelName: string, data: ModelRecord) {
-    const records = this.readData(tenantId, moduleName, modelName);
+    const records = this.getRecords(tenantId, moduleName, modelName);
     const newRecord = { ...data, id: Math.random().toString(36).substring(7) };
     records.push(newRecord);
-    this.writeData(tenantId, moduleName, modelName, records);
     return newRecord;
   }
 
   public updateRecord(tenantId: string, moduleName: string, modelName: string, id: string, data: ModelRecord) {
-    const records = this.readData(tenantId, moduleName, modelName);
+    const records = this.getRecords(tenantId, moduleName, modelName);
     const index = records.findIndex((r) => r.id === id);
     if (index !== -1) {
       records[index] = { ...records[index], ...data };
-      this.writeData(tenantId, moduleName, modelName, records);
       return records[index];
     }
     return null;
   }
 
   public deleteRecord(tenantId: string, moduleName: string, modelName: string, id: string) {
-    const records = this.readData(tenantId, moduleName, modelName);
+    const records = this.getRecords(tenantId, moduleName, modelName);
     const index = records.findIndex((r) => r.id === id);
     if (index !== -1) {
       const deleted = records.splice(index, 1);
-      this.writeData(tenantId, moduleName, modelName, records);
       return deleted[0];
     }
     return null;
   }
 }
 
-export const dataService = new DataService();
+// HMR: do not discard in-memory state on reload
+const globalAny: any = global;
+export const dataService = globalAny.__dataService || new DataService();
+if (process.env.NODE_ENV !== 'production') {
+  globalAny.__dataService = dataService;
+}

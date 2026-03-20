@@ -5,11 +5,18 @@ import { TenantStored } from '@/infrastructure/stored/TenantStored';
 import { ModuleStored } from '@/infrastructure/stored/ModuleStored';
 
 class MetadataService {
+  private _cache: Map<string, Tenant | null> = new Map();
+
   getTenant(tenantId: string): Tenant | null {
-    const dbMetaDir = path.join(process.cwd(), '../MetaWorkspaceStore/db-metadata');
+    if (this._cache.has(tenantId)) {
+      return this._cache.get(tenantId) || null;
+    }
+
+    const dbMetaDir = path.join(process.cwd(), './db/metadata');
     const tenantFilePath = path.join(dbMetaDir, 'tenants', `${tenantId}.json`);
 
     if (!fs.existsSync(tenantFilePath)) {
+      this._cache.set(tenantId, null);
       return null;
     }
 
@@ -58,8 +65,15 @@ class MetadataService {
       modules
     };
 
-    return new Tenant(tenantStored);
+    const tenant = new Tenant(tenantStored);
+    this._cache.set(tenantId, tenant);
+    return tenant;
   }
 }
 
-export const metadataService = new MetadataService();
+// HMR: do not discard in-memory state on reload
+const globalAny: any = global;
+export const metadataService = globalAny.__metadataService || new MetadataService();
+if (process.env.NODE_ENV !== 'production') {
+  globalAny.__metadataService = metadataService;
+}

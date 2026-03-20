@@ -1,0 +1,53 @@
+[
+  {
+    "id": "u1",
+    "email": "admin@example.com",
+    "name": "System Admin",
+    "tenantAssignments": [
+      {
+        "tenantId": "tenant-1",
+        "moduleNames": [
+          "sales"
+        ]
+      },
+      {
+        "tenantId": "tenant-2",
+        "moduleNames": [
+          "inventory"
+        ]
+      },
+      {
+        "tenantId": "tenant-admin",
+        "moduleNames": [
+          "metaManager"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "u2",
+    "email": "user1@example.com",
+    "name": "Acme User",
+    "tenantAssignments": [
+      {
+        "tenantId": "tenant-1",
+        "moduleNames": [
+          "sales"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "u3",
+    "email": "user2@example.com",
+    "name": "Globex User",
+    "tenantAssignments": [
+      {
+        "tenantId": "tenant-2",
+        "moduleNames": [
+          "inventory"
+        ]
+      }
+    ]
+  }
+]

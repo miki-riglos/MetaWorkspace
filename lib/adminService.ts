@@ -5,7 +5,7 @@ import path from 'path';
 
 class AdminService {
   private getUsers(): UserStored[] {
-    const filePath = path.join(process.cwd(), '../MetaWorkspaceStore/db-admin/users.json');
+    const filePath = path.join(process.cwd(), './db/admin/users.json');
     if (fs.existsSync(filePath)) {
       try {
         const fileContent = fs.readFileSync(filePath, 'utf-8');

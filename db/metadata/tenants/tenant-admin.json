@@ -1,0 +1,7 @@
+{
+  "id": "tenant-admin",
+  "name": "Meta Administrator",
+  "modules": [
+    "meta-manager"
+  ]
+}
