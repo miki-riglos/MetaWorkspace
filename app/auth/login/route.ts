@@ -1,23 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MOCK_USERS } from '@/mock-metadata-config/MOCK_USERS';
-import { MOCK_TENANTS } from '@/mock-metadata-config/MOCK_TENANTS';
 import { User } from '@/infrastructure/User';
+import { UserStored } from '@/infrastructure/stored/UserStored';
+
+const MOCK_USERS: UserStored[] = [
+  {
+    id: 'u1',
+    email: 'admin@example.com',
+    name: 'System Admin',
+    tenantAssignments: [{
+      tenantId: 'tenant-1', moduleNames: ['sales']
+    }, {
+      tenantId: 'tenant-2', moduleNames: ['inventory']
+    }, {
+      tenantId: 'tenant-admin', moduleNames: ['metaManager']
+    }]
+  },
+  {
+    id: 'u2',
+    email: 'user1@example.com',
+    name: 'Acme User',
+    tenantAssignments: [{ tenantId: 'tenant-1', moduleNames: ['sales'] }]
+  },
+  {
+    id: 'u3',
+    email: 'user2@example.com',
+    name: 'Globex User',
+    tenantAssignments: [{ tenantId: 'tenant-2', moduleNames: ['inventory'] }]
+  },
+];
 
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json();
 
-    const userRecord = MOCK_USERS.find(u => u.email === email);
-    if (!userRecord) {
+    const userStored = MOCK_USERS.find(u => u.email === email);
+    if (!userStored) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const user = new User(userRecord);
+    const user = new User(userStored);
 
-    // Filter tenants that the user has access to
-    const userTenantConfigs = MOCK_TENANTS.filter(t => user.tenantIds.includes(t.id));
+    return NextResponse.json(user.toStub());
 
-    return NextResponse.json(user.toStub(userTenantConfigs));
   } catch (error) {
     console.error('Login Error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

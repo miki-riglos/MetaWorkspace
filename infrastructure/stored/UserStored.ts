@@ -2,6 +2,10 @@ export type UserStored = {
   id: string;
   email: string;
   name: string;
-  tenantIds: string[];
+  tenantAssignments: TenantAssignment[];
 };
 
+export type TenantAssignment = {
+  tenantId: string;
+  moduleNames: string[];
+}
