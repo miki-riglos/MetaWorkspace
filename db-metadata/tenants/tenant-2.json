@@ -1,7 +1,0 @@
-{
-  "id": "tenant-2",
-  "name": "Globex",
-  "modules": [
-    "inventory"
-  ]
-}

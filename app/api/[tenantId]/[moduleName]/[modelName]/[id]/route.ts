@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getRecord, updateRecord, deleteRecord } from '@/lib/data-store';
+import { persistanceService } from '@/lib/persistanceService';
 import { ModelRecord } from '@/types';
 
 export async function GET(
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName, id } = await params;
-    const record = getRecord(tenantId, moduleName, modelName, id);
+    const record = persistanceService.getRecord(tenantId, moduleName, modelName, id);
 
     if (!record) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
@@ -28,8 +28,8 @@ export async function PUT(
   try {
     const { tenantId, moduleName, modelName, id } = await params;
     const data = await req.json() as ModelRecord;
-    
-    const updatedRecord = updateRecord(tenantId, moduleName, modelName, id, data);
+
+    const updatedRecord = persistanceService.updateRecord(tenantId, moduleName, modelName, id, data);
 
     if (!updatedRecord) {
       return NextResponse.json({ error: 'Record not found or could not be updated' }, { status: 404 });
@@ -48,10 +48,10 @@ export async function DELETE(
 ) {
   try {
     const { tenantId, moduleName, modelName, id } = await params;
-    const deletedRecord = deleteRecord(tenantId, moduleName, modelName, id);
+    const deletedRecord = persistanceService.deleteRecord(tenantId, moduleName, modelName, id);
 
     if (!deletedRecord) {
-       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Record not found' }, { status: 404 });
     }
 
     return NextResponse.json({ success: true, deleted: deletedRecord });
