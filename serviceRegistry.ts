@@ -1,7 +1,7 @@
 import path from 'path';
 import { IDataService } from '@/infrastructure/types';
 import { FsDataService } from '@/lib/FsDataService';
-import { MetadataService } from '@/lib/_metadataService';
+import { MetadataService } from '@/lib/MetadataService';
 
 const globalAny: any = global;
 
