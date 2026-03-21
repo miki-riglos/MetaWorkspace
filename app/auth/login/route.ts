@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminService } from '@/lib/adminService';
+import { adminService } from '@/lib/_adminService';
 
 export async function POST(req: NextRequest) {
   try {
