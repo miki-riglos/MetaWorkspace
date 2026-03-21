@@ -21,6 +21,27 @@ export class MetadataService {
     }
 
     const moduleStored = JSON.parse(fs.readFileSync(moduleFilePath, 'utf-8'));
+
+    // load models
+    const modelsPath = path.join(this._dbDir, moduleName, 'models');
+    if (fs.existsSync(modelsPath)) {
+      const modelFiles = fs.readdirSync(modelsPath);
+      moduleStored.models = modelFiles.map(modelFile => {
+        const modelPath = path.join(modelsPath, modelFile);
+        return JSON.parse(fs.readFileSync(modelPath, 'utf-8'));
+      });
+    }
+
+    // load views
+    const viewsPath = path.join(this._dbDir, moduleName, 'views');
+    if (fs.existsSync(viewsPath)) {
+      const viewFiles = fs.readdirSync(viewsPath);
+      moduleStored.views = viewFiles.map(viewFile => {
+        const viewPath = path.join(viewsPath, viewFile);
+        return JSON.parse(fs.readFileSync(viewPath, 'utf-8'));
+      });
+    }
+
     this._cache.set(moduleName, moduleStored);
 
     return moduleStored;
