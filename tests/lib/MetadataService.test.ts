@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { MetadataService } from '../../lib/metadataService';
+import { MetadataService } from '../../lib/_metadataService';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -24,8 +24,7 @@ describe('MetadataService', () => {
     const mockModule = { id: 'test-module', name: 'Test' };
 
     // Set up the file structure expected by the service
-    const dbMetaDir = path.join(dbDir, 'metadata');
-    const moduleDir = path.join(dbMetaDir, moduleName);
+    const moduleDir = path.join(dbDir, moduleName);
     const filePath = path.join(moduleDir, 'index.json');
 
     fs.mkdirSync(moduleDir, { recursive: true });

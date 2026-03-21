@@ -2,7 +2,7 @@ import { TenantStored } from '../stored/admin/TenantStored';
 import { TenantDto } from '../dto/TenantDto';
 import { Module } from './Module';
 import { TenantStub } from '../stub/TenantStub';
-import { metadataService } from '@/lib/metadataService';
+import { getMetadataService } from '@/serviceRegistry';
 
 export class Tenant {
   public readonly id: string;
@@ -12,7 +12,7 @@ export class Tenant {
   constructor(stored: TenantStored) {
     this.id = stored.id;
     this.name = stored.name;
-    this.modules = stored.moduleNames.map(moduleName => new Module(metadataService.getModuleStored(moduleName)));
+    this.modules = stored.moduleNames.map(moduleName => new Module(getMetadataService().getModuleStored(moduleName)));
   }
 
   getModule(moduleName: string): Module {

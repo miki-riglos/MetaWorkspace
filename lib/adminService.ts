@@ -33,7 +33,8 @@ class AdminService {
       throw new Error(`User ${email} not found`);
     }
 
-    const user = new User(userStored);
+    const tenantStubs = userStored.tenantAssignments.map((ta: { tenantId: string }) => this.getTenant(ta.tenantId).toStub());
+    const user = new User(userStored, tenantStubs);
     this._usersCache.set(email, user);
     return user;
   }

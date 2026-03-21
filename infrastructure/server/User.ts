@@ -1,7 +1,6 @@
 import { UserStored } from '../stored/admin/UserStored';
 import { UserStub } from '../stub/UserStub';
 import { TenantStub } from '../stub/TenantStub';
-import { adminService } from '@/lib/adminService';
 
 export class User {
   public readonly id: string;
@@ -9,12 +8,12 @@ export class User {
   public readonly name: string;
   public readonly tenantStubs: TenantStub[];
 
-  constructor(stored: UserStored) {
+  constructor(stored: UserStored, tenantStubs: TenantStub[]) {
     this.id = stored.id;
     this.email = stored.email;
     this.name = stored.name;
 
-    this.tenantStubs = stored.tenantAssignments.map(ta => adminService.getTenant(ta.tenantId).toStub());
+    this.tenantStubs = tenantStubs;
   }
 
   toStub(): UserStub {

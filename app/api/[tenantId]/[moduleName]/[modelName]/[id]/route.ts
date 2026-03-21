@@ -48,7 +48,7 @@ export async function DELETE(
 ) {
   try {
     const { tenantId, moduleName, modelName, id } = await params;
-    const deletedRecord = dataService.deleteRecord(tenantId, moduleName, modelName, id);
+    const deletedRecord = getDataService().deleteRecord(tenantId, moduleName, modelName, id);
 
     if (!deletedRecord) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
