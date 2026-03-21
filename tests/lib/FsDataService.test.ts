@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeEach, afterEach } from 'vitest';
-import { FsDataService } from '../../lib/FsDataService';
+import { FsDataService } from '@/lib/FsDataService';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';

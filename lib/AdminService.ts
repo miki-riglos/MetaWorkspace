@@ -1,16 +1,21 @@
 import fs from 'fs';
 import path from 'path';
-import { TenantStored } from '@/infrastructure/stored/admin/TenantStored';
-import { UserStored } from '@/infrastructure/stored/admin/UserStored';
-import { User } from '@/infrastructure/server/User';
-import { Tenant } from '@/infrastructure/server/Tenant';
+import { TenantStored } from '../infrastructure/stored/admin/TenantStored';
+import { UserStored } from '../infrastructure/stored/admin/UserStored';
+import { User } from '../infrastructure/server/User';
+import { Tenant } from '../infrastructure/server/Tenant';
 
-class AdminService {
+export class AdminService {
+  private _dbDir: string;
   private _usersCache: Map<string, User> = new Map();
   private _tenantsCache: Map<string, Tenant> = new Map();
 
+  constructor(dbDir: string) {
+    this._dbDir = dbDir;
+  }
+
   private getUsersStored(): UserStored[] {
-    const filePath = path.join(process.cwd(), './db/admin/users.json');
+    const filePath = path.join(this._dbDir, 'users.json');
     if (fs.existsSync(filePath)) {
       try {
         const fileContent = fs.readFileSync(filePath, 'utf-8');
@@ -72,5 +77,3 @@ class AdminService {
     return tenant.getModule(moduleName);
   }
 }
-
-export const adminService = new AdminService();

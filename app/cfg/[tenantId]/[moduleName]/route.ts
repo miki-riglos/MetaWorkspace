@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminService } from '@/lib/_adminService';
+import { getAdminService } from '@/serviceRegistry';
 
 export async function GET(
   req: NextRequest,
@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName } = await params;
-
+    const adminService = getAdminService();
     const module$ = adminService.getTenantModule(tenantId, moduleName);
 
     return NextResponse.json(module$.toDto());

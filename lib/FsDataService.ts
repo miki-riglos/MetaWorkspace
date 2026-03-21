@@ -1,4 +1,4 @@
-import { IDataService, ModelRecord } from '@/infrastructure/types';
+import { IDataService, ModelRecord } from '../infrastructure/types';
 import fs from 'fs';
 import path from 'path';
 

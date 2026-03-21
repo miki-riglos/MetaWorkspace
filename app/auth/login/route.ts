@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminService } from '@/lib/_adminService';
+import { getAdminService } from '@/serviceRegistry';
 
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json();
+    const adminService = getAdminService();
     const user = adminService.getUser(email);
 
     return NextResponse.json(user.toStub());

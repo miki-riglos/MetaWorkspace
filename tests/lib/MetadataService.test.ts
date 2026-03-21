@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { MetadataService } from '../../lib/MetadataService';
+import { MetadataService } from '@/lib/MetadataService';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';

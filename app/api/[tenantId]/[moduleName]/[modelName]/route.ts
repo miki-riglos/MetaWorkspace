@@ -8,9 +8,11 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName } = await params;
-    const records = getDataService().getRecords(tenantId, moduleName, modelName);
+    const dataService = getDataService();
+    const records = dataService.getRecords(tenantId, moduleName, modelName);
 
     return NextResponse.json(records);
+
   } catch (error) {
     console.error('API Error (GET):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
@@ -25,9 +27,11 @@ export async function POST(
     const { tenantId, moduleName, modelName } = await params;
     const data = await req.json() as ModelRecord;
 
-    const newRecord = getDataService().insertRecord(tenantId, moduleName, modelName, data);
+    const dataService = getDataService();
+    const newRecord = dataService.insertRecord(tenantId, moduleName, modelName, data);
 
     return NextResponse.json(newRecord, { status: 201 });
+
   } catch (error) {
     console.error('API Error (POST):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

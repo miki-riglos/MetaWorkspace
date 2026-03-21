@@ -8,13 +8,15 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName, id } = await params;
-    const record = getDataService().getRecord(tenantId, moduleName, modelName, id);
+    const dataService = getDataService();
+    const record = dataService.getRecord(tenantId, moduleName, modelName, id);
 
     if (!record) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
     }
 
     return NextResponse.json(record);
+
   } catch (error) {
     console.error('API Error (GET Record):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
@@ -29,13 +31,15 @@ export async function PUT(
     const { tenantId, moduleName, modelName, id } = await params;
     const data = await req.json() as ModelRecord;
 
-    const updatedRecord = getDataService().updateRecord(tenantId, moduleName, modelName, id, data);
+    const dataService = getDataService();
+    const updatedRecord = dataService.updateRecord(tenantId, moduleName, modelName, id, data);
 
     if (!updatedRecord) {
       return NextResponse.json({ error: 'Record not found or could not be updated' }, { status: 404 });
     }
 
     return NextResponse.json(updatedRecord);
+
   } catch (error) {
     console.error('API Error (PUT Record):', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { ModuleStored } from '@/infrastructure/stored/metadata/ModuleStored';
+import { ModuleStored } from '../infrastructure/stored/metadata/ModuleStored';
 
 export class MetadataService {
   private _dbDir: string;
