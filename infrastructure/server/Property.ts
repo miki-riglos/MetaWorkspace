@@ -1,5 +1,5 @@
-import { PropertyStored } from "./stored/PropertyStored";
-import { PropertyDto } from "./dto/PropertyDto";
+import { PropertyStored } from "../stored/metadata/PropertyStored";
+import { PropertyDto } from "../dto/PropertyDto";
 
 export type Cardinality = 'ONE_TO_ONE' | 'ONE_TO_MANY' | 'MANY_TO_ONE' | 'MANY_TO_MANY';
 

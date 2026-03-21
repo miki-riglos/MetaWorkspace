@@ -1,5 +1,5 @@
-import { ViewType } from '../View';
-import { ViewPart } from '../ViewPart';
+import { ViewType } from '../../server/View';
+import { ViewPart } from '../../server/ViewPart';
 
 export type ViewStored = {
   name: string;

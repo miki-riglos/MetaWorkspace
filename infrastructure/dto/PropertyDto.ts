@@ -1,4 +1,4 @@
-import { DataType, Relation } from '@/infrastructure/Property';
+import { DataType, Relation } from '@/infrastructure/server/Property';
 
 export type PropertyDto = {
   name: string;

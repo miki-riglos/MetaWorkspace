@@ -1,9 +1,7 @@
-import { UserStored, TenantAssignment } from './stored/UserStored';
-import { TenantStored } from './stored/TenantStored';
-import { UserStub } from './stub/UserStub';
-import { Tenant } from './Tenant';
-import { TenantStub } from './stub/TenantStub';
-import { metadataService } from '@/lib/metadataService';
+import { UserStored } from '../stored/admin/UserStored';
+import { UserStub } from '../stub/UserStub';
+import { TenantStub } from '../stub/TenantStub';
+import { adminService } from '@/lib/adminService';
 
 export class User {
   public readonly id: string;
@@ -15,7 +13,8 @@ export class User {
     this.id = stored.id;
     this.email = stored.email;
     this.name = stored.name;
-    this.tenantStubs = stored.tenantAssignments.map(ta => metadataService.getTenant(ta.tenantId)!.toStub());
+
+    this.tenantStubs = stored.tenantAssignments.map(ta => adminService.getTenant(ta.tenantId).toStub());
   }
 
   toStub(): UserStub {

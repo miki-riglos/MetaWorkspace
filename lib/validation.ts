@@ -1,5 +1,5 @@
-import { ModelRecord } from '@/types';
-import { Model } from '@/infrastructure/Model';
+import { ModelRecord } from '@/infrastructure/types';
+import { Model } from '@/infrastructure/server/Model';
 
 export interface ValidationError {
   field: string;

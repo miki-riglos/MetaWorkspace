@@ -1,6 +1,6 @@
 import React from 'react';
-import { ModelRecord } from '@/types';
-import { ViewPart } from '@/infrastructure/ViewPart';
+import { ModelRecord } from '@/infrastructure/types';
+import { ViewPart } from '@/infrastructure/server/ViewPart';
 
 // View
 export interface ViewParams {

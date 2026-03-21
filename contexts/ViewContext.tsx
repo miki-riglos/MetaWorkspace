@@ -2,10 +2,10 @@
 
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import { TabInfo } from './WorkspaceContext';
-import { ViewType } from '@/infrastructure/View';
+import { ViewType } from '@/infrastructure/server/View';
 import { View } from '@/infrastructure/client/View';
 import { useModule } from './ModuleContext';
-import { ModelRecord, PropertyValue } from '@/types';
+import { ModelRecord, PropertyValue } from '@/infrastructure/types';
 
 export interface BaseViewContextType {
   viewType: ViewType;

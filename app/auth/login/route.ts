@@ -4,11 +4,7 @@ import { adminService } from '@/lib/adminService';
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json();
-
     const user = adminService.getUser(email);
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
 
     return NextResponse.json(user.toStub());
 

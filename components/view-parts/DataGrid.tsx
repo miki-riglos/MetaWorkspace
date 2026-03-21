@@ -1,8 +1,8 @@
 import React from 'react';
-import { ModelRecord } from '@/types';
+import { ModelRecord } from '@/infrastructure/types';
 import { ViewPartComponent } from '../types';
 import { ViewPartRenderer } from '../ViewPartRenderer';
-import { ViewPart } from '@/infrastructure/ViewPart';
+import { ViewPart } from '@/infrastructure/server/ViewPart';
 
 export const DataGrid: ViewPartComponent = ({ part, data }) => {
   const records = data ?? [];

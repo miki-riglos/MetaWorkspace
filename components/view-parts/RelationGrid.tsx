@@ -1,7 +1,7 @@
 import React from 'react';
 import { ViewPartComponent } from '../types';
 import { DataGrid } from './DataGrid';
-import { ModelRecord } from '@/types';
+import { ModelRecord } from '@/infrastructure/types';
 
 export const RelationGrid: ViewPartComponent = ({ part, data }) => {
   const rows = (data as ModelRecord)?.[part.propertyName!] ?? [];

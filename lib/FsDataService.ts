@@ -1,13 +1,13 @@
-import { ModelRecord } from '@/types';
+import { IDataService, ModelRecord } from '@/infrastructure/types';
 import fs from 'fs';
 import path from 'path';
 
-export class DataService {
+export class FsDataService implements IDataService {
   private _dbDir: string;
   private _cache: Map<string, ModelRecord[]> = new Map();
 
-  constructor() {
-    this._dbDir = path.join(process.cwd(), './db/data');
+  constructor(dbDir: string) {
+    this._dbDir = dbDir;
   }
 
   private getCacheKey(tenantId: string, moduleName: string, modelName: string) {
@@ -42,19 +42,19 @@ export class DataService {
     return this._cache.get(key) || [];
   }
 
-  public getRecord(tenantId: string, moduleName: string, modelName: string, id: string) {
+  public getRecord(tenantId: string, moduleName: string, modelName: string, id: string): ModelRecord | undefined {
     const records = this.getRecords(tenantId, moduleName, modelName);
     return records.find((r) => r.id === id);
   }
 
-  public insertRecord(tenantId: string, moduleName: string, modelName: string, data: ModelRecord) {
+  public insertRecord(tenantId: string, moduleName: string, modelName: string, data: ModelRecord): ModelRecord {
     const records = this.getRecords(tenantId, moduleName, modelName);
     const newRecord = { ...data, id: Math.random().toString(36).substring(7) };
     records.push(newRecord);
     return newRecord;
   }
 
-  public updateRecord(tenantId: string, moduleName: string, modelName: string, id: string, data: ModelRecord) {
+  public updateRecord(tenantId: string, moduleName: string, modelName: string, id: string, data: ModelRecord): ModelRecord | null {
     const records = this.getRecords(tenantId, moduleName, modelName);
     const index = records.findIndex((r) => r.id === id);
     if (index !== -1) {
@@ -64,7 +64,7 @@ export class DataService {
     return null;
   }
 
-  public deleteRecord(tenantId: string, moduleName: string, modelName: string, id: string) {
+  public deleteRecord(tenantId: string, moduleName: string, modelName: string, id: string): ModelRecord | null {
     const records = this.getRecords(tenantId, moduleName, modelName);
     const index = records.findIndex((r) => r.id === id);
     if (index !== -1) {
@@ -73,11 +73,4 @@ export class DataService {
     }
     return null;
   }
-}
-
-// HMR: do not discard in-memory state on reload
-const globalAny: any = global;
-export const dataService = globalAny.__dataService || new DataService();
-if (process.env.NODE_ENV !== 'production') {
-  globalAny.__dataService = dataService;
 }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dataService } from '@/lib/dataService';
-import { ModelRecord } from '@/types';
+import { getDataService } from '@/serviceRegistry';
+import { ModelRecord } from '@/infrastructure/types';
 
 export async function GET(
   req: NextRequest,
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName, id } = await params;
-    const record = dataService.getRecord(tenantId, moduleName, modelName, id);
+    const record = getDataService().getRecord(tenantId, moduleName, modelName, id);
 
     if (!record) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
@@ -29,7 +29,7 @@ export async function PUT(
     const { tenantId, moduleName, modelName, id } = await params;
     const data = await req.json() as ModelRecord;
 
-    const updatedRecord = dataService.updateRecord(tenantId, moduleName, modelName, id, data);
+    const updatedRecord = getDataService().updateRecord(tenantId, moduleName, modelName, id, data);
 
     if (!updatedRecord) {
       return NextResponse.json({ error: 'Record not found or could not be updated' }, { status: 404 });

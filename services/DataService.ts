@@ -1,4 +1,4 @@
-import { ModelRecord } from "@/types";
+import { ModelRecord } from "@/infrastructure/types";
 
 export class DataService {
   private readonly _tenantId: string;

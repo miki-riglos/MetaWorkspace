@@ -1,5 +1,5 @@
-import { ViewType } from '@/infrastructure/View';
-import { ViewPart } from '../ViewPart';
+import { ViewType } from '@/infrastructure/server/View';
+import { ViewPart } from '../server/ViewPart';
 
 export type ViewDto = {
   name: string;

@@ -1,8 +1,8 @@
-import { ModuleStored } from './stored/ModuleStored';
+import { ModuleStored } from '../stored/metadata/ModuleStored';
 import { Model } from './Model';
 import { View } from './View';
-import { ModuleDto } from './dto/ModuleDto';
-import { ModuleStub } from './stub/ModuleStub';
+import { ModuleDto } from '../dto/ModuleDto';
+import { ModuleStub } from '../stub/ModuleStub';
 
 export class Module {
   public readonly name: string;

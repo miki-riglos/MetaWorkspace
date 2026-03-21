@@ -1,4 +1,4 @@
-import { ViewType } from "../View";
+import { ViewType } from "../server/View";
 
 export type ViewStub = {
   name: string;

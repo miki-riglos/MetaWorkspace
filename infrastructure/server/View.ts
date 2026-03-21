@@ -1,7 +1,7 @@
-import { ViewStored } from './stored/ViewStored';
+import { ViewStored } from '../stored/metadata/ViewStored';
 import { ViewPart } from './ViewPart';
-import { ViewDto } from './dto/ViewDto';
-import { ViewStub } from './stub/ViewStub';
+import { ViewDto } from '../dto/ViewDto';
+import { ViewStub } from '../stub/ViewStub';
 
 export type ViewType = 'LIST' | 'DETAIL';
 

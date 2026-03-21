@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dataService } from '@/lib/dataService';
-import { ModelRecord } from '@/types';
+import { getDataService } from '@/serviceRegistry';
+import { ModelRecord } from '@/infrastructure/types';
 
 export async function GET(
   req: NextRequest,
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { tenantId, moduleName, modelName } = await params;
-    const records = dataService.getRecords(tenantId, moduleName, modelName);
+    const records = getDataService().getRecords(tenantId, moduleName, modelName);
 
     return NextResponse.json(records);
   } catch (error) {
@@ -25,7 +25,7 @@ export async function POST(
     const { tenantId, moduleName, modelName } = await params;
     const data = await req.json() as ModelRecord;
 
-    const newRecord = dataService.insertRecord(tenantId, moduleName, modelName, data);
+    const newRecord = getDataService().insertRecord(tenantId, moduleName, modelName, data);
 
     return NextResponse.json(newRecord, { status: 201 });
   } catch (error) {

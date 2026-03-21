@@ -1,6 +1,6 @@
-import { ModelStored } from './stored/ModelStored';
+import { ModelStored } from '../stored/metadata/ModelStored';
 import { Property } from './Property';
-import { ModelDto } from './dto/ModelDto';
+import { ModelDto } from '../dto/ModelDto';
 
 export class Model {
   public readonly name: string;

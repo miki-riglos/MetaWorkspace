@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewPartComponent } from '../types';
-import { ModelRecord } from '@/types';
+import { ModelRecord } from '@/infrastructure/types';
 
 export const LookupField: ViewPartComponent = ({ part, data }) => {
   const [options, _setOptions] = React.useState<any[]>([]);

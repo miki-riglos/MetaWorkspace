@@ -1,0 +1,23 @@
+[
+  {
+    "id": "tenant-admin",
+    "name": "MetaManager",
+    "moduleNames": [
+      "metaManager"
+    ]
+  },
+  {
+    "id": "tenant-1",
+    "name": "Acme Corporation",
+    "moduleNames": [
+      "sales"
+    ]
+  },
+  {
+    "id": "tenant-2",
+    "name": "Globex Corporation",
+    "moduleNames": [
+      "inventory"
+    ]
+  }
+]

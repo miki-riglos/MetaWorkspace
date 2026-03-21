@@ -1,8 +1,8 @@
-import { ViewType } from '@/infrastructure/View';
+import { ViewType } from '@/infrastructure/server/View';
 import { Module } from './Module';
 import { Model } from './Model';
 import { ViewDto } from '../dto/ViewDto';
-import { ViewPart } from '../ViewPart';
+import { ViewPart } from '../server/ViewPart';
 
 export class View {
   public readonly module: Module;
